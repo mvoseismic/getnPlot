@@ -1,0 +1,66 @@
+BUGS
+after obspy update, crashes with call to 
+	thisFig.set_size_inches(plotSize2[0]/100.0, plotSize2[1]/100.0)
+	line 842
+sometimes mismatch of length of t and d when I try to plot Z spectrums
+why did I get MBRV.SHZ instead of BHZ on 2023-02-06 23:08?
+- seems to be because I use "yesterday" for date NO IT'S NOT
+check if 3C plots are normalized
+SUDDENLY FILE NAMES HAVE SECONDS BY DEFAULT - then not
+noflag time doesn't work unless at end
+green line doesn't seem to be plotted in right place, see 20230420-1545--Distal_VT-MBLG-3C-5s2.png
+type allplusZ isn't working
+strain works, but not sure if it can cope with MC seismic channels at same time
+fmax for tfr doesn't plot
+
+use mseed for default if wws not working
+
+REVIEW tests
+why did testPlots stop after 15?
+
+ADD
+option of file names ending in bz2
+On 3C plots, make Y + and - scales the same
+default file directory
+use mseed if up to n days ago
+simple datetime 20230929-1212
+non-MVO stations
+xxx spectrum plot
+3CPM option
+--noshow option to override --show (include this in fe)
+option to decimate data for long plots (reduces grass)
+add HDF
+add channel flag
+add kind to show original with filtered
+print out max amplitudes (to file?)
+
+despiking
+setting different z limits when big events are present = Normalize sgram in only a narrow f range
+timescale in minutes or hours as well as seconds, also filename changes
+output max amp of envelope to file, append
+set times if reading from file
+particle motions
+
+plot3CManyWays
+plotZManyWays
+
+scaleogram - remove values outside fmin fmax range
+why two tick scales on lahar plot?
+filter before trim
+spectrogram option for normalising individual spectrums
+create cutoff date for wavserver requests - to get all channsl! -- not needed, they all have 
+lahar plot needs f scale
+add grayscale option to spectrograms
+get strain data MC.*..BHL 
+
+get MSS1 with close?
+
+restore rockfall plot in library
+
+see if getnPlotRockfall is quikcer otr not with local mseed file.
+
+normalise is messed up
+
+
+panPlots.py
+How to calculate spectrogram for big data sets

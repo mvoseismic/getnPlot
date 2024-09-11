@@ -1,0 +1,3 @@
+#!/usr/bin/bash
+ 
+magick montage *special3*.png -tile x1 -geometry +10+1 montage.png

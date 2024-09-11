@@ -1,0 +1,25 @@
+#!/usr/bin/bash
+# 
+# Runs getnPlot.py under proper conda environment for 3C sets
+# (assumes time is first pick time)
+
+eval "$(conda shell.bash hook)"
+
+if [ "$HOSTNAME" = "opsproc2" ]; then
+    conda activate >/dev/null 2>&1
+else
+    conda activate obspy >/dev/null 2>&1
+fi
+
+getnPlot --kind 3C --sta MBFR "$@"
+getnPlot --kind 3C --sta MBLG "$@"
+getnPlot --kind 3C --sta MBLY "$@"
+getnPlot --kind 3C --sta MBRY "$@"
+getnPlot --kind 3C --sta MBBY "$@"
+getnPlot --kind 3C --sta MBGH "$@"
+getnPlot --kind 3C --sta MBWH "$@"
+getnPlot --kind 3C --sta MBFL "$@"
+getnPlot --kind 3C --sta MBGB "$@"
+getnPlot --kind 3C --sta MBRV "$@"
+
+conda deactivate >/dev/null 2>&1

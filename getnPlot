@@ -1,0 +1,15 @@
+#!/usr/bin/bash
+# 
+# Runs getnPlot.py under proper conda environment
+
+eval "$(conda shell.bash hook)"
+
+if [ "$HOSTNAME" = "opsproc2" ]; then
+    conda activate >/dev/null 2>&1
+else
+    conda activate obspy >/dev/null 2>&1
+fi
+
+getnPlot.py "$@"
+
+conda deactivate >/dev/null 2>&1

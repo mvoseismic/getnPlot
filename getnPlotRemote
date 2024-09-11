@@ -1,0 +1,11 @@
+#!/usr/bin/bash
+#
+# Runcs getnplot on opsproc2 and retrieves files
+# R.C. Stewart, 2023-10-18
+
+ssh seisan@opsproc2 "PATH=\"$HOME/bin:$HOME/anaconda3/condabin/:$PATH\"; cd ~/tmpRod; getnPlot $@"
+
+scp seisan@opsproc2:~/tmpRod/*.png .
+
+
+ssh seisan@opsproc2 "rm -f ~/tmpRod/*.png"

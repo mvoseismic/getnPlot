@@ -1,0 +1,18 @@
+#!/usr/bin/bash
+# 
+# Runs getnPlot.py under proper conda environment for VT earthquakes
+# (assumes time is origin time)
+
+eval "$(conda shell.bash hook)"
+
+if [ "$HOSTNAME" = "opsproc2" ]; then
+    conda activate >/dev/null 2>&1
+else
+    conda activate obspy >/dev/null 2>&1
+fi
+
+getnPlot.py --tag VT "$@"
+getnPlot.py --tag VT --pre 2 --dur 10 "$@"
+getnPlot.py --kind close3C --tag VT --pre 2 --dur 10 "$@"
+
+conda deactivate >/dev/null 2>&1

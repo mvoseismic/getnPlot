@@ -1,0 +1,40 @@
+#!/usr/bin/bash
+# 
+# Runs getnPlot.py under proper conda environment for rockfalls
+# (assumes time is first pick time)
+
+eval "$(conda shell.bash hook)"
+
+if [ "$HOSTNAME" = "opsproc2" ]; then
+    conda activate >/dev/null 2>&1
+else
+    conda activate obspy >/dev/null 2>&1
+fi
+
+freqHP=0.5
+
+mkdir -p tmpGetNPlot
+cd tmpGetNPlot
+rm -f *.*
+
+#getnPlot -q --pre 5 --dur 30 --shape portrait --kind Z --sta MSS1,MBFR,MBLG,MBLY,MBRY,MBBY,MBGH,MBWH --hpfilt $freqHP "$@" 
+getnPlot -q --pre 5 --dur 30 --shape portrait --hpfilt $freqHP "$@" 
+getnPlot -q --pre 2 --dur 10 --shape portrait --kind 3C --sta MBFR,MBLY,MBLG --hpfilt $freqHP "$@"
+getnPlot -q --pre 5 --dur 30 --kind tfr --sta MSS1 --fmin 1.0 --fmax 50.0 --hpfilt $freqHP "$@"
+getnPlot -q --pre 5 --dur 30 --kind tfr --sta MBFR --fmin 1.0 --fmax 50.0 --hpfilt $freqHP "$@"
+getnPlot -q --pre 5 --dur 30 --kind tfr --sta MBLG --fmin 1.0 --fmax 50.0 --hpfilt $freqHP "$@"
+getnPlot -q --pre 5 --dur 30 --kind tfr --sta MBLY --fmin 1.0 --fmax 50.0 --hpfilt $freqHP "$@"
+
+conda deactivate >/dev/null 2>&1
+
+magick mogrify -crop 572x432+10+41 *tfr*.png
+magick mogrify -resize 636x480 *tfr*.png
+magick montage *MSS1-Z-tfr*.png *MBFR-Z-tfr*.png *MBLY-Z-tfr*.png *MBLG-Z-tfr*.png -tile 1x4 -geometry +1+1 tmp.png
+#rm *tfr*.png
+files=(*)
+fname=$files
+fname2=${fname//allz/special2}
+magick montage *allz*.png tmp.png *3C*.png -tile 3x1 -geometry +1+1 "${fname2}"
+mv ${fname2} ..
+cd ..
+rm -r tmpGetNPlot

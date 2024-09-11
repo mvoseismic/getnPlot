@@ -1,0 +1,266 @@
+#!/usr/bin/bash
+
+cmd='./getnPlot.py --mode test'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test -h'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test -v'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --mode getnplot'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --mode get'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --mode plot'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --quiet'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --source auto'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --source wws'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --source mseed'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --source cont'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --source event'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --source testfile'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --wwsip winston1 --wwsport 16091'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --kind allZ'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test -k 3C'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test -k radian3C'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --sta MBLG'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --sta MBLG,MBLY,MSS1'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test -d today'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --date today'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --date 2022-12-31'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test -d 2022.123'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test -t 12:12:12.3'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --time 12:12'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --time now'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --time now-600'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --time now-600s'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --time now-600m'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --time now-6h'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --pre 60'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test -p 6s'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test -p 6m'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test -p 6h'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --dur 60'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test -l 6s'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test -l 6m'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test -l 6h'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --shape square'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --shape xlong --size 1000'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --tscale d'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --tscale h'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --fscale log'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --zscale power'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --show'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --fmin 0.01'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --fmax 10000.0'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --hpfilt 10000.0'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --norm 3c'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --dir ~/tmp'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --tag TestTag'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --plotfile TestFile'
+echo "==========================="
+echo "$cmd"
+$cmd
+
+cmd='./getnPlot.py --mode test --datafile TestFile'
+echo "==========================="
+echo "$cmd"
+$cmd

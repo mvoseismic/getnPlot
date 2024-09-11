@@ -1,0 +1,28 @@
+#!/usr/bin/bash
+# 
+# Runs getnPlot.py under proper conda environment for rockfalls
+# (assumes time is first pick time)
+
+eval "$(conda shell.bash hook)"
+
+if [ "$HOSTNAME" = "opsproc2" ]; then
+    conda activate >/dev/null 2>&1
+else
+    conda activate obspy >/dev/null 2>&1
+fi
+
+getnPlot --tag Rockfall "$@"
+getnPlot --kind close3C --tag Rockfall "$@"
+getnPlot --kind tfr --tag Rockfall --sta MBBY "$@"
+getnPlot --kind tfr --tag Rockfall --sta MBLY "$@"
+getnPlot --kind tfr --tag Rockfall --sta MBLG "$@"
+getnPlot --kind tfr --tag Rockfall --sta MBFR "$@"
+getnPlot --kind tfr --tag Rockfall --sta MSS1 "$@"
+getnPlot --kind 3C --tag Rockfall --sta MBBY "$@"
+getnPlot --kind 3C --tag Rockfall --sta MBLY "$@"
+getnPlot --kind 3C --tag Rockfall --sta MBLG "$@"
+getnPlot --kind 3C --tag Rockfall --sta MBFR "$@"
+getnPlot --kind rockfall --tag Rockfall "$@"
+getnPlotSpecial --tag Rockfall "$@"
+
+conda deactivate >/dev/null 2>&1
