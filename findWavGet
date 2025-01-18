@@ -1,0 +1,176 @@
+#!/usr/bin/perl
+#
+# Finds WAV file for date and time and duration
+# If more than one file, joins them and returns the joined file
+#
+# R.C.Stewart, 2025-01-16
+
+use strict;
+use warnings;
+use File::Copy;
+use File::Temp qw/tempdir/;
+use Cwd qw(getcwd);
+use DateTime;
+use DateTime::Duration;
+
+my $numArgs = $#ARGV + 1;
+
+if( $numArgs < 2 ){ 
+    print "Not enough arguments", "\n";
+    print "usage: findWav yyyy-mm-dd hh:mm:ss minutes", "\n";
+} else {
+
+    my $eventDate = $ARGV[0];
+    my $eventTime = $ARGV[1];
+    my $windowLength;
+    my $dirSource;
+    if( $numArgs == 3 ){
+        $windowLength = $ARGV[2];
+    } else {
+        $windowLength = 0;
+    }
+    $dirSource = "DSNC_";
+
+    my($yyyy,$mm,$dd) = split( '-', $eventDate );
+    my($hh,$mi,$sss) = split( ':', $eventTime );
+    $sss =~ s/\..*//s;
+
+    my $dirWavRoot;
+    if( $yyyy < 2011 ){
+        $dirWavRoot = '/mnt/mvohvs3/MVOSeisD6/WAV';
+    } else {
+        $dirWavRoot = '/mnt/mvofls2/Seismic_Data/WAV';
+    }
+    my $dirWav = join( '/', $dirWavRoot, $dirSource, $yyyy, $mm );
+
+    # datetimes for event time
+    my $dtEvent = DateTime->new(
+        year       => $yyyy,
+        month      => $mm,
+        day        => $dd,
+        hour       => $hh,
+        minute     => $mi,
+        second     => $sss,
+        nanosecond => 0,
+        time_zone  => 'UTC',
+    );
+    my $dtdEvent = DateTime::Duration->new( minutes => $windowLength );
+    my $dtEventEnd = $dtEvent + $dtdEvent;
+    
+
+    # datetimes for file
+    my $wavFileDuration = 20;
+    my $dtdWaveFile = DateTime::Duration->new( minutes => $wavFileDuration );
+    my $miFloor;
+    if( $mi < 20 ) {
+        $miFloor = "00";
+    } elsif( $mi < 40 ) {
+        $miFloor = "20";
+    } else {
+        $miFloor = "40";
+    }
+    my $dtWaveFile = DateTime->new(
+        year       => $yyyy,
+        month      => $mm,
+        day        => $dd,
+        hour       => $hh,
+        minute     => $miFloor,
+        second     => 0,
+        nanosecond => 0,
+        time_zone  => 'UTC',
+    );
+
+    my @filesWave = ();
+
+    my $jumpOut = 0;
+    do {
+        
+        $yyyy = sprintf( "%4d", $dtWaveFile->year );
+        $mm =  sprintf( "%02d", $dtWaveFile->month);
+        $dd =  sprintf( "%02d", $dtWaveFile->day);
+        $hh =  sprintf( "%02d", $dtWaveFile->hour);
+        $mi =  sprintf( "%02d", $dtWaveFile->minute);
+
+        my $miFloor;
+        if( $mi < 20 ) {
+            $miFloor = "00";
+        } elsif( $mi < 40 ) {
+            $miFloor = "20";
+        } else {
+            $miFloor = "40";
+        }
+
+        # Datetime for file
+        $dtWaveFile = DateTime->new(
+            year       => $yyyy,
+            month      => $mm,
+            day        => $dd,
+            hour       => $hh,
+            minute     => $miFloor,
+            second     => 0,
+            nanosecond => 0,
+            time_zone  => 'UTC',
+        );
+        #print $dtWaveFile->ymd, ' ', $dtWaveFile->hms, "\n";
+    
+        my $joiner = "-";
+        my $fileWavRoot = join( $joiner, $yyyy, $mm, $dd, $hh );
+        my $fileWav = join( '', $fileWavRoot, $miFloor, '*' );
+        $fileWav = join( '/', $dirWav, $fileWav );
+        my $cmd = "ls -1 $fileWav 2>/dev/null";
+        my @filesWav = `$cmd`;
+        chomp @filesWav;
+        @filesWave = (@filesWave, @filesWav );
+
+        $joiner = "_";
+        $fileWavRoot = join( $joiner, $yyyy, $mm, $dd, $hh );
+        $fileWav = join( '', $fileWavRoot, $miFloor, '*' );
+        $fileWav = join( '/', $dirWav, $fileWav );
+        $cmd = "ls -1 $fileWav 2>/dev/null";
+        @filesWav = `$cmd`;
+        chomp @filesWav;
+        @filesWave = (@filesWave, @filesWav );
+
+        $dtWaveFile = $dtWaveFile + $dtdWaveFile;
+        if( $dtEventEnd > $dtWaveFile ){
+            $jumpOut = 0;
+        } else {
+            $jumpOut = 1;
+        }
+    } until( $jumpOut );
+
+
+    my $nFilesWave = scalar( @filesWave );
+    if( $nFilesWave == 1 ){
+        print $filesWave[0], "\n";
+    } else {
+        # Copy wav files to temporary directory
+        my $dirTmp = tempdir;
+        my $dirStart = getcwd();
+        chdir $dirTmp;
+        foreach( @filesWave ){
+            copy( $_, ".") or die "Copy failed: $!";
+        }
+
+        # DIRF
+        system( 'dirf * > /dev/null 2>&1' );
+
+        # SEISEI
+        my $command = 'seisei';
+        my @params = qw( 1 mseed XX 1250 );
+        open(FH, '>', 'seiseiin.txt') or die $!;
+            print FH join( "\n", @params ), "\n";
+        close(FH);
+        my $cmd = join( ' ', $command, '<seiseiin.txt >/dev/null 2>&1' );
+        system( $cmd );
+
+        # Resulting merged file
+        my $fileMerged =  `ls *XX*`;
+        chomp $fileMerged;
+        my $fileWav = join( '/', $dirTmp, $fileMerged );
+        print $fileWav, "\n";
+
+        chdir $dirStart;
+    }
+
+}

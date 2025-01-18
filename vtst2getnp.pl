@@ -1,5 +1,6 @@
 #!/usr/bin/env perl
 #
+# Draws one figure per event in event list file.
 
 use strict;
 use warnings;

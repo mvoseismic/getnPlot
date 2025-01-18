@@ -14,5 +14,6 @@ fi
 getnPlot.py --tag VT "$@"
 getnPlot.py --tag VT --pre 2 --dur 10 "$@"
 getnPlot.py --kind close3C --tag VT --pre 2 --dur 10 "$@"
+getnPlotSpecial --tag VT "$@"
 
 conda deactivate >/dev/null 2>&1

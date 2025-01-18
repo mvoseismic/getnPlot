@@ -1,0 +1,34 @@
+#!/usr/bin/bash
+#
+
+rm *.png
+
+getnPlot -q --date 2025-01-16 --time 21:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
+getnPlot -q --date 2025-01-16 --time 22:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
+getnPlot -q --date 2025-01-16 --time 23:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
+getnPlot -q --date 2025-01-17 --time 00:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
+getnPlot -q --date 2025-01-17 --time 01:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
+getnPlot -q --date 2025-01-17 --time 02:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
+getnPlot -q --date 2025-01-17 --time 03:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
+getnPlot -q --date 2025-01-17 --time 04:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
+getnPlot -q --date 2025-01-17 --time 05:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
+getnPlot -q --date 2025-01-17 --time 06:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
+getnPlot -q --date 2025-01-17 --time 07:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
+getnPlot -q --date 2025-01-17 --time 08:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
+getnPlot -q --date 2025-01-17 --time 09:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
+getnPlot -q --date 2025-01-17 --time 10:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
+getnPlot -q --date 2025-01-17 --time 11:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
+getnPlot -q --date 2025-01-17 --time 12:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
+getnPlot -q --date 2025-01-17 --time 13:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
+getnPlot -q --date 2025-01-17 --time 14:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
+getnPlot -q --date 2025-01-17 --time 15:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
+getnPlot -q --date 2025-01-17 --time 16:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
+getnPlot -q --date 2025-01-17 --time 17:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
+getnPlot -q --date 2025-01-17 --time 18:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
+getnPlot -q --date 2025-01-17 --time 19:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
+getnPlot -q --date 2025-01-17 --time 20:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
+getnPlot -q --date 2025-01-17 --time 21:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
+
+magick mogrify -crop 3724x91+79+61 *.png
+
+magick montage 2025*.png -tile 1x -geometry +0+0 20250116-2141--VT_swarmette-getnPlotHeli.png

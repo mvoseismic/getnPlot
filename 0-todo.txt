@@ -1,4 +1,5 @@
 BUGS
+Not working with MVOE_ event files 2023,4,5
 after obspy update, crashes with call to 
 	thisFig.set_size_inches(plotSize2[0]/100.0, plotSize2[1]/100.0)
 	line 842
@@ -12,14 +13,26 @@ green line doesn't seem to be plotted in right place, see 20230420-1545--Distal_
 type allplusZ isn't working
 strain works, but not sure if it can cope with MC seismic channels at same time
 fmax for tfr doesn't plot
-
 use mseed for default if wws not working
+use plotaday code for faulty mseed files
+multi-day from mseed files
+--plotfile doesn't set tag
+--plotfile doesn't work properly with -- in filename
+--title doesnt work for date or time or datetime for today or now or yesterday
+add no title option
+cont might not get all data before arrival
+set ylim works for multi-channel plots?
+heli option doesn''t work
 
 REVIEW tests
 why did testPlots stop after 15?
 
 ADD
-option of file names ending in bz2
+add xxxxxlong
+move statons grouping from --kind to --sta
+no channel label
+default pre as fixed percentage of dur
+TICK    option of file names ending in bz2
 On 3C plots, make Y + and - scales the same
 default file directory
 use mseed if up to n days ago

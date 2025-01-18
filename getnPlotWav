@@ -1,0 +1,137 @@
+#!/usr/bin/perl
+#
+# Runs getnPlot using WAV/DSNC_data
+# given date and time and duration
+#
+# R.C.Stewart, 2025-01-14
+
+use strict;
+use warnings;
+
+my $numArgs = $#ARGV + 1;
+
+if( $numArgs < 1 ){ 
+    print "Not enough arguments", "\n";
+    print "usage: findWav yyyy-mm-dd hh:mm:ss <minutes>", "\n";
+    print "usage: findWav input.txt", "\n";
+} else {
+
+    print "Additional getnPlot arguments up: ";
+    my $argsAdditional = <STDIN>;
+    chomp $argsAdditional;
+
+    open(FHO, '>', 'getnPlotWav.out') or die $!;
+
+    my @DATES;
+    my @TIMES;
+    my @DURATIONS;
+    my @TAGS;
+    if( $numArgs == 1 ){
+        my $fileDatims = $ARGV[0];
+        open(my $fh, '<:encoding(UTF-8)', $fileDatims)
+            or die "Could not open file '$fileDatims' $!";
+        while (my $row = <$fh>) {
+            chomp $row;
+            if( $row =~ /^2/ ){
+                my ($da, $ti, $du, $ta) = split /\s+/, $row;
+                push( @DATES, $da );
+                push( @TIMES, $ti );
+                if( defined($du) ){
+                    push( @DURATIONS, $du );
+                } else {
+                    push( @DURATIONS, 0 );
+                }
+                if( defined($ta) ){
+                    push( @TAGS, $ta );
+                } else {
+                    push( @TAGS, '' );
+                }
+            }
+        }
+    } else {
+        my $eventDate = $ARGV[0];
+        my $eventTime = $ARGV[1];
+        my $windowLength;
+        my $tag;
+        if( $numArgs == 3 ){
+            $windowLength = $ARGV[2];
+        } else {
+            $windowLength = 0;
+        }
+        if( $numArgs == 4 ){
+            $tag = $ARGV[3];
+        } else {
+            $tag = '';
+        }
+        push( @DATES, $eventDate );
+        push( @TIMES, $eventTime );
+        push( @DURATIONS, $windowLength);
+        push( @TAGS, $tag);
+    }
+
+    my $nEvents = scalar( @DATES );
+
+    for (my $iEv = 0; $iEv < $nEvents; $iEv++) {
+        my $eventDate = $DATES[$iEv];
+        my $eventTime = $TIMES[$iEv];
+        my $window = $DURATIONS[$iEv];
+        my $tag = $TAGS[$iEv];
+
+        my($yyyy,$mm,$dd) = split( '-', $eventDate );
+        my($hh,$mi,$sss) = split( ':', $eventTime );
+
+        my $dirWavRoot;
+        if( $yyyy < 2011 ){
+            $dirWavRoot = '/mnt/mvohvs3/MVOSeisD6/WAV/DSNC_';
+        } else {
+            $dirWavRoot = '/mnt/mvofls2/Seismic_Data/WAV/DSNC_';
+        }
+        my $dirWav = join( '/', $dirWavRoot, $yyyy, $mm );
+
+        my $miFloor;
+        if( $mi < 20 ) {
+            $miFloor = "00";
+        } elsif( $mi < 40 ) {
+            $miFloor = "20";
+        } else {
+            $miFloor = "40";
+        }
+
+        my $joiner = "-";
+        my $fileWavRoot = join( $joiner, $yyyy, $mm, $dd, $hh );
+        my $fileWav = join( '', $fileWavRoot, $miFloor, '*' );
+        $fileWav = join( '/', $dirWav, $fileWav );
+        my $cmd = "ls -1 $fileWav 2>/dev/null";
+        my @filesWav1 = `$cmd`;
+        chomp @filesWav1;
+
+        $joiner = "_";
+        $fileWavRoot = join( $joiner, $yyyy, $mm, $dd, $hh );
+        $fileWav = join( '', $fileWavRoot, $miFloor, '*' );
+        $fileWav = join( '/', $dirWav, $fileWav );
+        $cmd = "ls -1 $fileWav 2>/dev/null";
+        my @filesWav2 = `$cmd`;
+        chomp @filesWav2;
+
+        my @filesWav = (@filesWav1,@filesWav2);
+        my $nFilesWav = scalar( @filesWav );
+
+        print "$eventDate $eventTime $window    No of WAV files found: $nFilesWav \n";
+
+        foreach( @filesWav ){
+            if( $tag eq '' ){
+                $cmd = join( " ", "getnPlot --quiet", $argsAdditional, "--date", $eventDate, "--time", $eventTime, "--source", $_ );
+            } else {
+                $cmd = join( " ", "getnPlot --quiet", $argsAdditional, "--tag", $tag, "--date", $eventDate, "--time", $eventTime, "--source", $_ );
+            }
+            print $cmd, "\n";
+            system( $cmd );
+
+            print FHO "$cmd\n";
+        }
+        print "\n";
+    }
+
+    close( FHO );
+
+}

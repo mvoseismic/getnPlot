@@ -7,7 +7,7 @@
 # Version 2: much more logical
 # Version 2.0-dev: development
 #
-# R.C. Stewart, Dec 2022 to Feb 2023
+# R.C. Stewart, Dec 2022 to Jan 2025
 #
 
 
@@ -40,6 +40,7 @@ sys.path.append( '/'.join( [os.path.expanduser('~'), 'src/pythonModules' ] ) )
 
 import rodsPythonThings
 import rodsPlotTfr as rodstfr
+#import rodsPlotLongSgram as rodslsgram
 
 
 
@@ -64,7 +65,7 @@ parser.add_argument('--source', default='auto', help='Data source (auto tries ww
 parser.add_argument('--wwsip', default='172.17.102.60', help='Hostname or IP address of winston wave server', metavar='')
 parser.add_argument('--wwsport', default=16022, help='Port of winston wave server', metavar='')
 
-choices=['allZ','all3C','closeZ','close3C','radianZ','radian3C','Z','specialZ', 'spectrumZ', '3C','special3C','irishZ','irish3C','lahar','tfr','forAI', 'rockfall', 'partmot', 'all', 'allplusZ', 'strain', 'strainplus', 'infra' ]
+choices=['allZ','all3C','closeZ','close3C','radianZ','radian3C','Z','specialZ', 'spectrumZ', '3C','special3C','irishZ','irish3C','lahar','tfr','forAI', 'rockfall', 'partmot', 'all', 'allplusZ', 'strain', 'strainplus', 'infra', 'heli', 'longsgram', 'stringthing' ]
 parser.add_argument('-k', '--kind', default='allZ', choices=choices, help='Kind of plot (use all for get only): '+' | '.join(choices), metavar='')
 parser.add_argument('--sta', default='MSS1', help='Station(s) to be plotted, comma separated) (not used in some kinds of plot).', metavar='')
 
@@ -77,11 +78,12 @@ parser.add_argument('-p', '--pre', default='10', help='Window starts this many s
 parser.add_argument('-l', '--dur', default='60', help='Window duration, in seconds: append m or h to input minutes or hours', metavar='')
 parser.add_argument('--twin', default='30', help='Duration, in seconds, of window for analysis: append m or h to input minutes or hours', metavar='')
 
-choices=['landscape','portrait','square','long','xlong', 'xxlong', 'xxxlong', 'thin']
+choices=['landscape','portrait','square','long','xlong','xxlong','xxxlong','xxxxlong','thin']
 parser.add_argument('--shape', default='landscape', choices=choices , help='Shape of plot: '+' | '.join(choices), metavar='')
 parser.add_argument('--size', type=int, default=1920, help='Length (pixels) of longest side of plot', metavar='')
 choices=['d','s','m','h']
 parser.add_argument('--tscale', default='d', choices=choices , help='Time scale units (defaults to s or what window duration is specified in): ' +' | '.join(choices), metavar='')
+parser.add_argument('--ylim', type=float, default=0, help='Limits of Y axis for plot (+/- this number)', metavar='')
 choices=['linear','log']
 parser.add_argument('--fscale', default='linear', choices=choices, help='Frequency scale for analysis and plotting: '+' | '.join(choices), metavar='')
 choices=['amp','power','log','sqrt']
@@ -90,7 +92,7 @@ parser.add_argument('--plotspec', action='store_true', help='No spectrum in TFR 
 parser.add_argument('--plotnorms', action='store_true', help='No RMS in lahar plot')
 parser.add_argument('--show', action='store_true', help='Show plot on screen as well as saving it')
 parser.add_argument('--grid', action='store_true', help='Add time-axis grid to seismograms')
-parser.add_argument('--title', help='Title for plot, defaults gives all information.', metavar='')
+parser.add_argument('--title', help='Title for plot, defaults gives all information. Special arguments: datetime, date, time, tag', metavar='')
 parser.add_argument('--bigtitle', action='store_true', help='Big bold title.')
 parser.add_argument('--nogreen', action='store_true', help='Do not plot green line for arrival/event time.')
 parser.add_argument('--linewidth', type=float, default=0.5, help='Thickness of plotted line', metavar='')
@@ -103,6 +105,9 @@ choices=['no','yes','3c']
 parser.add_argument('--norm', default='3c', choices=choices, help='Normalise data: '+' | '.join(choices), metavar='')
 parser.add_argument('--mult', default=1.0, help='Multiply data by this much', metavar='')
 parser.add_argument('--integrate', action='store_true', help='Integrate seismic data')
+parser.add_argument('--abs', action='store_true', help='Use absolute value of data')
+parser.add_argument('--sqrt', action='store_true', help='Use square-root value of data')
+parser.add_argument('--log', action='store_true', help='Use logarithinc value of data')
 
 parser.add_argument('--dir', default='.', help='Directory name for plots and files', metavar='')
 parser.add_argument('--tag', default='', help='String (no spaces) used in output file names', metavar='')
@@ -136,6 +141,7 @@ eventTimeArg = ''.join( args.rest )
 if eventTimeArg:
     eventTime = eventTimeArg
 plotTscale= args.tscale
+plotYlim=args.ylim
 wpre = args.pre
 if wpre[-1] == 's':
     windowPre = float( wpre[:-1] )
@@ -181,7 +187,10 @@ dataHPfilt = args.hpfilt
 dataLPfilt = args.lpfilt
 dataIntegrate = args.integrate
 dataNormalize = args.norm
-dataMult= args.mult
+#dataMult= args.mult
+dataAbs= args.abs
+dataSqrt= args.sqrt
+dataLog = args.log
 outDir = args.dir
 filenameTag = args.tag
 filePlot = args.plotfile
@@ -285,6 +294,8 @@ elif plotShape == "xxlong":
     plotSize2 = (plotSize, int(plotSize/5.0))
 elif plotShape == "xxxlong":
     plotSize2 = (2*plotSize, 2*int(plotSize/7.5))
+elif plotShape == "xxxxlong":
+    plotSize2 = (2*plotSize, 2*int(plotSize/20))
 elif plotShape == "thin":
     plotSize2 = (int(plotSize/2.5), plotSize)
 
@@ -360,9 +371,9 @@ elif plotKind[-1] == "z":
         dataNormalize = "no"
 
 if plotKind[0:5] == "close":
-    stas = ["MSS1", "MBFR", "MBLG", "MBLY", "MBRY"]
+    stas = ["MSS1", "MBFR", "MBLY", "MBLG", "MBRY"]
 elif plotKind[0:6] == "radian":
-    stas = ["MBFR", "MBLG", "MBLY", "MBBY", "MBGH", "MBFL", "MBGB"]
+    stas = ["MBFR", "MBLY", "MBLG", "MBBY", "MBGH", "MBFL", "MBGB"]
 elif plotKind == "tfr":
     stas = dataStation.split(",")
     chas = "z"
@@ -417,6 +428,12 @@ elif plotKind == "infra":
 elif plotKind == "allplusZ":
     stas = ["MSS1", "MBFR", "MBLY", "MBLG", "MBRY", "MBBY",
             "MBHA", "MBGH", "MBWH", "MBFL", "MBGB", "TRNT", "OLV1", "MBRV"]
+    chas = "z"
+elif plotKind == "stringthing":
+    if dataStation == "MSS1":
+        stas = ["MSS1", "MBLY" ]
+    else:
+        stas = dataStation.split(",")
     chas = "z"
 else:
     # "allZ"
@@ -507,7 +524,16 @@ plotTitle = plotTitle.replace( "_", " " )
 plotTitle = "  ".join( [plotTitle2, plotTitle] )
 
 if plotTitleArg:
-    plotTitle = plotTitleArg
+    if plotTitleArg == "datetime":
+        plotTitle = eventDate + ' ' + eventTime
+    elif plotTitleArg == "date":
+        plotTitle = eventDate
+    elif plotTitleArg == "time":
+        plotTitle = eventTime
+    elif plotTitleArg == "tag":
+        plotTitle = fileNameTag
+    else:
+        plotTitle = plotTitleArg
 
 filePlot = filenameSeparator.join([filePlot, 'png'])
 filePlot = dirnameSeparator.join([outDir, filePlot])
@@ -554,6 +580,7 @@ if not runQuiet:
     print(' Plot size:       ' + str(plotSize))
     print(' Plot size (2):   ' + str(plotSize2))
     print(' Plot timescale:  ' + plotTscale)
+    print(' Plot Y limit:    ' + str(plotYlim))
     print(' Plot freq scale: ' + plotFscale)
     print(' Plot Z scale:    ' + plotZscale)
     print(' Max plot freq:   ' + str(plotFmax))
@@ -573,6 +600,9 @@ if not runQuiet:
     print(' LP filter:       ' + str(dataLPfilt))
     print(' Normalize:       ' + dataNormalize)
     print(' Integrate:       ' + str(dataIntegrate))
+    print(' Abs      :       ' + str(dataAbs))
+    print(' Sqrt     :       ' + str(dataSqrt))
+    print(' Log      :       ' + str(dataLog))
 
     print( 'Output' )
     print(' Output dir:      ' + outDir)
@@ -638,8 +668,14 @@ elif dataSource == "mseed":
     st = client.get_waveforms('*', '*', '*', '*', datimBeg, datimEnd)
 
 elif dataSource == "cont":
-    if not runQuiet:
-        print( 'source ' + dataSource + ' not implemented' )
+    command = 'findWavGet ' + eventDate + ' ' + eventTime + ' ' + str( int(windowDur/60.0) )
+    print( command )
+    dataSource = subprocess.check_output( command, shell=True, text=True )
+    dataSource = dataSource.rstrip()
+    if os.path.isfile(dataSource):
+        if not runQuiet:
+            print(' Data file.: ' + dataSource)
+        st = obspy.read(dataSource)
 
 elif dataSource == "event":
     if not runQuiet:
@@ -848,6 +884,8 @@ if not runQuiet:
 
 
 ############  Process data
+# Deal with overlaps etc
+#st2.merge(method=1)
 # Detrend
 st2.detrend('demean')
 if dataLPfilt > 0.0:
@@ -861,6 +899,12 @@ if dataIntegrate:
 if dataDownsample > 1:
     st2.decimate(factor=dataDownsample, strict_length=False)
 st2.detrend('demean')
+if dataAbs:
+    st2 = rodsPythonThings.streamFiddle( st2, 'abs' )
+if dataSqrt:
+    st2 = rodsPythonThings.streamFiddle( st2, 'sqrt' )
+if dataLog:
+    st2 = rodsPythonThings.streamFiddle( st2, 'log' )
 
 
 
@@ -894,7 +938,17 @@ plotFuncs = 'obspy'
 ############  Create plot
 if plotKind == "tfr":
     thisFig = rodstfr.plot_tfr(tr.data, dt=tr.stats.delta, fmin=plotFmin,
-        mode='sqrt', fmax=plotFmax, w0=16., nf=128, fft_zero_pad_fac=4, cmap='jet', show=False )
+    mode='sqrt', fmax=plotFmax, w0=16., nf=128, fft_zero_pad_fac=4, cmap='jet', show=False )
+    thisFig.set_size_inches(plotSize2[0]/100.0, plotSize2[1]/100.0)
+
+#elif plotKind == "longsgram":
+    #thisFig = rodslsgram.plotLongSgram( st2, windowPre, plotFmin, plotFmax )
+    #plotFuncs = 'rods'
+    #thisFig.set_size_inches(plotSize2[0]/100.0, plotSize2[1]/100.0)
+
+elif plotKind == "stringthing" and numberStations == 2:
+    thisFig = rodsPythonThings.plotStringThing( st2, windowPre, windowDur )
+    plotFuncs = 'rods'
     thisFig.set_size_inches(plotSize2[0]/100.0, plotSize2[1]/100.0)
 
 elif plotKind == "forai" and numberStations == 1:
@@ -925,6 +979,10 @@ elif plotKind == "lahar":
 elif plotKind == "rockfall":
     thisFig = rodsPythonThings.plotRockfall( st2, windowPre, datimEventString )
     plotFuncs = 'rods'
+
+elif plotKind == "heli":
+    thisFig = st2.plot(starttime=datimBeg, endtime=datimEnd,
+                   type='dayplot', equal_scale=equalScale, linewidth=plotLineWidth, show=False, size=plotSize2)
 
 else:
     if plotGrid:
@@ -969,6 +1027,19 @@ elif plotFuncs == 'obspy':
     yLimits = theseAxes[0].get_ylim()
     xPlot = xLimits[0] + windowPre
     theseAxes[0].vlines( xPlot, yLimits[0], yLimits[1], colors='g', linewidth= 0.2 )
+elif plotFuncs == 'rods' and plotKind == 'stringthing':
+    theseAxes = thisFig.get_axes()
+    xLimits = theseAxes[0].get_xlim()
+    yLimits = theseAxes[0].get_ylim()
+    xPlot = xLimits[0] + windowPre
+    theseAxes[0].vlines( xPlot, yLimits[0], yLimits[1], colors='g', linewidth= 0.2 )
+
+
+
+############  Fix Y scale
+if plotFuncs == 'obspy' and plotYlim> 0:
+    theseAxes = thisFig.get_axes()
+    theseAxes[0].set_ylim([-1*plotYlim, plotYlim])
 
 
 

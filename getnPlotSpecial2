@@ -27,8 +27,8 @@ getnPlot -q --pre 5 --dur 30 --kind tfr --sta MBLY --fmin 1.0 --fmax 50.0 --hpfi
 
 conda deactivate >/dev/null 2>&1
 
-magick mogrify -crop 572x432+10+41 *tfr*.png
-magick mogrify -resize 636x480 *tfr*.png
+magick mogrify -crop 1654x1113+86+117 *tfr*.png
+magick mogrify -resize 574x432! *tfr*.png
 magick montage *MSS1-Z-tfr*.png *MBFR-Z-tfr*.png *MBLY-Z-tfr*.png *MBLG-Z-tfr*.png -tile 1x4 -geometry +1+1 tmp.png
 #rm *tfr*.png
 files=(*)

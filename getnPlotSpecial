@@ -30,8 +30,8 @@ conda deactivate >/dev/null 2>&1
 magick mogrify -crop 1815x317+74+59 basement.png
 magick mogrify -resize 4486x600! basement.png
 
-magick mogrify -crop 572x432+10+41 *tfr*.png
-magick mogrify -resize 636x480 *tfr*.png
+magick mogrify -crop 1654x1113+86+117 *tfr*.png
+magick mogrify -resize 638x480! *tfr*.png
 
 magick montage *MSS1-Z-tfr*.png *MBFR-Z-tfr*.png *MBLY-Z-tfr*.png *MBLG-Z-tfr*.png -tile 1x4 -geometry +1+1 tmp.png
 

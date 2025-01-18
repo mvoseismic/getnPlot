@@ -1,0 +1,74 @@
+#!/usr/bin/perl
+#
+# Runs getnPlot using with a file of detes and times created by mulplt2vtse2.pl
+# given date and time and duration
+#
+# R.C.Stewart, 2025-01-17
+
+use strict;
+use warnings;
+
+my $numArgs = $#ARGV + 1;
+
+if( $numArgs < 1 ){ 
+    print "Not enough arguments", "\n";
+    print "usage: findWav input.txt", "\n";
+} else {
+
+    print "Additional getnPlot arguments up: ";
+    my $argsAdditional = <STDIN>;
+    chomp $argsAdditional;
+
+    open(FHO, '>', 'getnPlotVtse2.out') or die $!;
+
+    my @DATES;
+    my @TIMES;
+    my @DURATIONS;
+    my @TAGS;
+    if( $numArgs == 1 ){
+        my $fileDatims = $ARGV[0];
+        open(my $fh, '<:encoding(UTF-8)', $fileDatims)
+            or die "Could not open file '$fileDatims' $!";
+        while (my $row = <$fh>) {
+            chomp $row;
+            if( $row =~ /^2/ ){
+                my ($da, $ti, $du, $ta) = split /\s+/, $row;
+                push( @DATES, $da );
+                push( @TIMES, $ti );
+                if( defined($du) ){
+                    push( @DURATIONS, $du );
+                } else {
+                    push( @DURATIONS, 0 );
+                }
+                if( defined($ta) ){
+                    push( @TAGS, $ta );
+                } else {
+                    push( @TAGS, '' );
+                }
+            }
+        }
+    }
+
+    my $nEvents = scalar( @DATES );
+
+    for (my $iEv = 0; $iEv < $nEvents; $iEv++) {
+        my $eventDate = $DATES[$iEv];
+        my $eventTime = $TIMES[$iEv];
+        my $window = $DURATIONS[$iEv];
+        my $tag = $TAGS[$iEv];
+
+        my $cmd;
+        if( $tag eq '' ){
+            $cmd = join( " ", "getnPlot --quiet", $argsAdditional, "--date", $eventDate, "--time", $eventTime );
+        } else {
+            $cmd = join( " ", "getnPlot --quiet", $argsAdditional, "--tag", $tag, "--date", $eventDate, "--time", $eventTime );
+        }
+        print $cmd, "\n";
+        system( $cmd );
+
+        print FHO "$cmd\n";
+    }
+
+    close( FHO );
+
+}
