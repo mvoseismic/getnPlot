@@ -97,7 +97,7 @@ if( $numArgs < 2 ){
     $cmd = join( ' ', 'magick montage *GNPFH*.png -tile 1x -geometry +0+0', $filePlot );
     system( $cmd );
 
-    if( fc( $keepPlots ) ne fc( "y" ){
+    if( fc( $keepPlots ) ne fc( "y" ) ){
     	$cmd = 'rm *GNPFH*.png';
     	system( $cmd );
     }
