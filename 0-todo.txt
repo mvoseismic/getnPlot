@@ -23,7 +23,7 @@ add no title option
 cont might not get all data before arrival
 set ylim works for multi-channel plots?
 heli option doesn''t work
---source cont doesnt always work
+--source cont doesnt always work - PROBLEM IS FILES MERGED WITH SEISEI HAVING GAPS
 
 REVIEW tests
 why did testPlots stop after 15?
