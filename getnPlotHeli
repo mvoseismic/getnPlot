@@ -71,6 +71,10 @@ if( $numArgs < 2 ){
 
     $options = join( ' ', $options, $additionalOptions );
 
+    print "Keep individual plot files?: ";
+    my $keepPlots = <STDIN>;
+    chomp $keepPlots;
+
     my $jumpOut = 0;
     do {
         
@@ -93,9 +97,6 @@ if( $numArgs < 2 ){
     $cmd = join( ' ', 'magick montage *GNPFH*.png -tile 1x -geometry +0+0', $filePlot );
     system( $cmd );
 
-    print "Keep individual plot files?: ";
-    my $keepPlots = <STDIN>;
-    chomp $keepPlots;
     if( fc( $keepPlots ) ne fc( "y" ){
     	$cmd = 'rm *GNPFH*.png';
     	system( $cmd );
