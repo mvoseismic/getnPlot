@@ -16,7 +16,7 @@ my $numArgs = $#ARGV + 1;
 
 if( $numArgs < 2 ){ 
     print "Not enough arguments", "\n";
-    print "usage: getnPlotHeli yyyy-mm-dd hh:mm minutesWide minutesPlot", "\n";
+    print "usage: getnPlotHeli yyyy-mm-dd hh:mm minutesWide hoursPlot", "\n";
 } else {
 
     print "WARNING: THIS TAKES A LONG TIME\n";
@@ -30,8 +30,9 @@ if( $numArgs < 2 ){
         $plotLength = $ARGV[3];
     } else {
         $lineLength = 60;
-        $plotLength = 12*60;
+        $plotLength = 24;
     }
+    $plotLength = $plotLength * 60;
 
     my($yyyy,$mm,$dd) = split( '-', $eventDate );
     my($hh,$mi) = split( ':', $eventTime );
@@ -80,13 +81,10 @@ if( $numArgs < 2 ){
     } until( $jumpOut );
 
     my $cmd = 'magick mogrify -crop 3724x91+79+61 *GNPFH*.png';
-    print $cmd, "\n";
     system( $cmd );
     $cmd = join( ' ', 'magick montage *GNPFH*.png -tile 1x -geometry +0+0', $filePlot );
-    print $cmd, "\n";
     system( $cmd );
     $cmd = 'rm *GNPFH*.png';
-    print $cmd, "\n";
     system( $cmd );
 
 
