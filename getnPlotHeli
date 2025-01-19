@@ -1,34 +1,93 @@
-#!/usr/bin/bash
+#!/usr/bin/perl
 #
+# Runs getnPlot multiple times and then montages the output to create a helicorder-like plot
+#
+# R.C.Stewart, 2025-01-18
 
-rm *.png
+use strict;
+use warnings;
+use File::Copy;
+use File::Temp qw/tempdir/;
+use Cwd qw(getcwd);
+use DateTime;
+use DateTime::Duration;
 
-getnPlot -q --date 2025-01-16 --time 21:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
-getnPlot -q --date 2025-01-16 --time 22:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
-getnPlot -q --date 2025-01-16 --time 23:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
-getnPlot -q --date 2025-01-17 --time 00:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
-getnPlot -q --date 2025-01-17 --time 01:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
-getnPlot -q --date 2025-01-17 --time 02:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
-getnPlot -q --date 2025-01-17 --time 03:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
-getnPlot -q --date 2025-01-17 --time 04:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
-getnPlot -q --date 2025-01-17 --time 05:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
-getnPlot -q --date 2025-01-17 --time 06:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
-getnPlot -q --date 2025-01-17 --time 07:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
-getnPlot -q --date 2025-01-17 --time 08:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
-getnPlot -q --date 2025-01-17 --time 09:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
-getnPlot -q --date 2025-01-17 --time 10:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
-getnPlot -q --date 2025-01-17 --time 11:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
-getnPlot -q --date 2025-01-17 --time 12:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
-getnPlot -q --date 2025-01-17 --time 13:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
-getnPlot -q --date 2025-01-17 --time 14:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
-getnPlot -q --date 2025-01-17 --time 15:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
-getnPlot -q --date 2025-01-17 --time 16:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
-getnPlot -q --date 2025-01-17 --time 17:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
-getnPlot -q --date 2025-01-17 --time 18:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
-getnPlot -q --date 2025-01-17 --time 19:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
-getnPlot -q --date 2025-01-17 --time 20:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
-getnPlot -q --date 2025-01-17 --time 21:00 --pre 0m --dur 60m --kind Z --sta MSS1 --shape xxxxlong --hpfilt 5.0 --ylim 900
+my $numArgs = $#ARGV + 1;
 
-magick mogrify -crop 3724x91+79+61 *.png
+if( $numArgs < 2 ){ 
+    print "Not enough arguments", "\n";
+    print "usage: getnPlotHeli yyyy-mm-dd hh:mm minutesWide minutesPlot", "\n";
+} else {
 
-magick montage 2025*.png -tile 1x -geometry +0+0 20250116-2141--VT_swarmette-getnPlotHeli.png
+    print "WARNING: THIS TAKES A LONG TIME\n";
+
+    my $eventDate = $ARGV[0];
+    my $eventTime = $ARGV[1];
+    my $lineLength;
+    my $plotLength;
+    if( $numArgs == 4 ){
+        $lineLength = $ARGV[2];
+        $plotLength = $ARGV[3];
+    } else {
+        $lineLength = 60;
+        $plotLength = 12*60;
+    }
+
+    my($yyyy,$mm,$dd) = split( '-', $eventDate );
+    my($hh,$mi) = split( ':', $eventTime );
+
+    my $filePlot = join( '-', join( '', $yyyy, $mm, $dd ), join( '', $hh, $mi ), '-getnPlotHeli-' );
+    $filePlot = join( '', $filePlot, sprintf( "%d", $lineLength ), 'm.png' );
+
+    # datetime for start time
+    my $dtStart = DateTime->new(
+        year       => $yyyy,
+        month      => $mm,
+        day        => $dd,
+        hour       => $hh,
+        minute     => $mi,
+        second     => 0,
+        nanosecond => 0,
+        time_zone  => 'UTC',
+    );
+    my $dtdJump = DateTime::Duration->new( minutes => $lineLength );
+    my $dtdPlot = DateTime::Duration->new( minutes => $plotLength );
+    my $dtEnd = $dtStart + $dtdPlot;
+    
+    print "Additional getnPlot options: ";
+    my $optsAdditional = <STDIN>;
+    chomp $optsAdditional;
+    my $options = '--quiet --tag GNPFH --shape xxxxlong --pre 0m --kind Z';
+    $options = join( ' ', $options, $optsAdditional, '--dur', $lineLength ); 
+    $options = join( '', $options, 'm' );
+    $options = join( ' ', $options, '--sta MSS1 --hpfilt 5.0 --ylim 1200' );
+
+    my $jumpOut = 0;
+    do {
+        
+        my $gnpDate = $dtStart->ymd;
+        my $gnpTime = $dtStart->hms;
+
+	    my $cmd = join( ' ', 'getnPlot', $options, '--date', $gnpDate, '--time', $gnpTime );
+	    print $cmd, "\n";
+        system( $cmd );
+
+        $dtStart = $dtStart + $dtdJump;
+    
+        if( $dtStart >= $dtEnd ){
+            $jumpOut = 1;
+        }
+    } until( $jumpOut );
+
+    my $cmd = 'magick mogrify -crop 3724x91+79+61 *GNPFH*.png';
+    print $cmd, "\n";
+    system( $cmd );
+    $cmd = join( ' ', 'magick montage *GNPFH*.png -tile 1x -geometry +0+0', $filePlot );
+    print $cmd, "\n";
+    system( $cmd );
+    $cmd = 'rm *GNPFH*.png';
+    print $cmd, "\n";
+    system( $cmd );
+
+
+}

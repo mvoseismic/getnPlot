@@ -16,7 +16,7 @@ if( $numArgs < 1 ){
     print "usage: findWav input.txt", "\n";
 } else {
 
-    print "Additional getnPlot arguments up: ";
+    print "Additional getnPlot arguments: ";
     my $argsAdditional = <STDIN>;
     chomp $argsAdditional;
 
