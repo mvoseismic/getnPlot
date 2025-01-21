@@ -116,6 +116,7 @@ parser.add_argument('--datafile', default='', help='Data file name, no extension
 parser.add_argument('--datimtag', default=4, help='Number of characters in time bit of datim tag', metavar='')
 
 parser.add_argument('--downsample', type=int, default=1, help='Downsampling factor', metavar='')
+parser.add_argument('--saverms', action='store_true', help='Save RMS of signals in a text file')
 
 parser.add_argument('rest', nargs=argparse.REMAINDER)
 
@@ -203,6 +204,7 @@ plotNogreen = args.nogreen
 plotLineWidth= args.linewidth
 filenameDatimN = float( args.datimtag )
 dataDownsample = args.downsample
+saveRMS = args.saverms
 
 if plotTscale == 'd':
     plotTscale = 's'
@@ -525,11 +527,11 @@ plotTitle = "  ".join( [plotTitle2, plotTitle] )
 
 if plotTitleArg:
     if plotTitleArg == "datetime":
-        plotTitle = eventDate + ' ' + eventTime
+        plotTitle = evDatim.strftime("%Y-%m-%d %H:%M:%S.%f")[:-5]
     elif plotTitleArg == "date":
-        plotTitle = eventDate
+        plotTitle = evDatim.strftime("%Y-%m-%d")
     elif plotTitleArg == "time":
-        plotTitle = eventTime
+        plotTitle = evDatim.strftime("%H:%M:%S.%f")[:-5]
     elif plotTitleArg == "tag":
         plotTitle = fileNameTag
     else:
@@ -615,6 +617,7 @@ if not runQuiet:
     print(' Show plot:       ' + str(plotShow))
 
     print(' Downsampling:    ' + str(dataDownsample))
+    print(' Save RMS :       ' + str(saveRMS))
 
 
 ############  Exit when testing
@@ -916,6 +919,18 @@ if runMode== "get":
     st2.write( fileMseedOut, "MSEED" )
     exit(0)
 
+
+
+############  Save RMS of each channel in text file
+if saveRMS:
+    fileRMS = ''.join([ datimEventString, '--rms.txt' ])
+    fileRMS = open(fileRMS, "w")
+    nTrace = len(st2)
+    for itr in range(nTrace):
+        tr = st2[itr]
+        dataRMS = np.sqrt( np.mean( np.square( tr.detrend("demean") ) ) )
+        fileRMS.write( ' '.join([ evDatim.strftime("%Y-%m-%d %H:%M:%S.%f")[:-5], tr.stats.station, tr.stats.channel, str(dataRMS), "\n"]) )
+    fileRMS.close()
 
 
 ############  Plot signal normalization

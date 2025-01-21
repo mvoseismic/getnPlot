@@ -18,7 +18,7 @@ use plotaday code for faulty mseed files
 multi-day from mseed files
 --plotfile doesn't set tag
 --plotfile doesn't work properly with -- in filename
---title doesnt work for date or time or datetime for today or now or yesterday
+XX--title doesnt work for date or time or datetime for today or now or yesterday
 add no title option
 cont might not get all data before arrival
 set ylim works for multi-channel plots?
