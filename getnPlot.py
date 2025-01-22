@@ -533,7 +533,7 @@ if plotTitleArg:
     elif plotTitleArg == "time":
         plotTitle = evDatim.strftime("%H:%M:%S.%f")[:-5]
     elif plotTitleArg == "tag":
-        plotTitle = fileNameTag
+        plotTitle = filenameTag
     else:
         plotTitle = plotTitleArg
 
