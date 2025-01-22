@@ -31,7 +31,6 @@ why did testPlots stop after 15?
 ADD
 add xxxxxlong
 move statons grouping from --kind to --sta
-no channel label
 default pre as fixed percentage of dur
 TICK    option of file names ending in bz2
 On 3C plots, make Y + and - scales the same

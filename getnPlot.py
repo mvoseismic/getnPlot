@@ -117,6 +117,8 @@ parser.add_argument('--datimtag', default=4, help='Number of characters in time 
 
 parser.add_argument('--downsample', type=int, default=1, help='Downsampling factor', metavar='')
 parser.add_argument('--saverms', action='store_true', help='Save RMS of signals in a text file')
+parser.add_argument('--nochaff', action='store_true', help='Remove all labelling, titles')
+parser.add_argument('--noscnl', action='store_true', help='Remove scnl label in panel')
 
 parser.add_argument('rest', nargs=argparse.REMAINDER)
 
@@ -205,6 +207,8 @@ plotLineWidth= args.linewidth
 filenameDatimN = float( args.datimtag )
 dataDownsample = args.downsample
 saveRMS = args.saverms
+plotNochaff = args.nochaff
+plotNoscnl = args.noscnl
 
 if plotTscale == 'd':
     plotTscale = 's'
@@ -537,6 +541,9 @@ if plotTitleArg:
     else:
         plotTitle = plotTitleArg
 
+# Remove any underscores from title
+plotTitle = plotTitle.replace( "_", " " ) 
+
 filePlot = filenameSeparator.join([filePlot, 'png'])
 filePlot = dirnameSeparator.join([outDir, filePlot])
 fileMseedOut = filenameSeparator.join([fileMseedOut, 'mseed'])
@@ -618,6 +625,8 @@ if not runQuiet:
 
     print(' Downsampling:    ' + str(dataDownsample))
     print(' Save RMS :       ' + str(saveRMS))
+    print(' No text in plot: ' + str(plotNochaff))
+    print(' No SCNL in plot: ' + str(plotNoscnl))
 
 
 ############  Exit when testing
@@ -1048,6 +1057,24 @@ elif plotFuncs == 'rods' and plotKind == 'stringthing':
     yLimits = theseAxes[0].get_ylim()
     xPlot = xLimits[0] + windowPre
     theseAxes[0].vlines( xPlot, yLimits[0], yLimits[1], colors='g', linewidth= 0.2 )
+
+
+
+############  Remove text titles and labels
+if plotNochaff:
+    theseAxes = thisFig.get_axes()
+    for thisAxes in theseAxes:
+        thisAxes.set_yticklabels([])
+        thisAxes.set_xticklabels([])
+        thisAxes.set_title('')
+
+
+
+############  Remove SCNL label in panels
+if plotNoscnl:
+    theseAxes = thisFig.get_axes()
+    for thisAxes in theseAxes:
+        thisAxes.texts[0].remove()
 
 
 
