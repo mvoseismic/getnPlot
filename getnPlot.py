@@ -441,6 +441,9 @@ elif plotKind == "stringthing":
     else:
         stas = dataStation.split(",")
     chas = "z"
+elif plotKind == "heli":
+    stas = dataStation.split(",")
+    chas = 'z'
 else:
     # "allZ"
     stas = ["MSS1", "MBFR", "MBLY", "MBLG", "MBRY", "MBBY",
