@@ -4,8 +4,6 @@ after obspy update, crashes with call to
 	thisFig.set_size_inches(plotSize2[0]/100.0, plotSize2[1]/100.0)
 	line 842
 sometimes mismatch of length of t and d when I try to plot Z spectrums
-why did I get MBRV.SHZ instead of BHZ on 2023-02-06 23:08?
-- seems to be because I use "yesterday" for date NO IT'S NOT
 check if 3C plots are normalized
 SUDDENLY FILE NAMES HAVE SECONDS BY DEFAULT - then not
 noflag time doesn't work unless at end
@@ -19,9 +17,13 @@ multi-day from mseed files
 --plotfile doesn't set tag
 --plotfile doesn't work properly with -- in filename
 XX--title doesnt work for date or time or datetime for today or now or yesterday
-add no title option
+XXadd no title option
 cont might not get all data before arrival
 set ylim works for multi-channel plots?
+
+ISSUES
+why did I get MBRV.SHZ instead of BHZ on 2023-02-06 23:08?
+- seems to be because I use "yesterday" for date NO IT'S NOT
 heli option doesn''t work
 --source cont doesnt always work - PROBLEM IS FILES MERGED WITH SEISEI HAVING GAPS
 

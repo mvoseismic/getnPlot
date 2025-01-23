@@ -61,7 +61,7 @@ if( $numArgs < 2 ){
     $options = join( '', $options, 'm' );
     print "Fixed getnPlot options: $options\n";
 
-    my $additionalOptions = '--sta MSS1 --hpfilt 5.0 --ylim 1200';
+    my $additionalOptions = '--sta MSS1 --hpfilt 2.0 --ylim 1200';
     print "Current additional options: ", $additionalOptions, "\n";
     print "Replace above options with (<CR> for not): ";
     my $optsAdditional = <STDIN>;

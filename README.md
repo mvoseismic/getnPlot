@@ -86,9 +86,13 @@ getnPlot
   --datafile     Data file name, no extension, default is based on arguments (default: )
   --datimtag     Number of characters in time bit of datim tag (default: 4)
   --downsample   Downsampling factor (default: 1)
+  --saverms      Save RMS of signals in a text file (default: False)
+  --nochaff      Remove all labelling, titles (default: False)
+  --noscnl       Remove scnl label in panel (default: False)
+
 
 ```
-## Scripts (as of 2025-01-43)
+## Scripts (as of 2025-01-23)
 | Script       | Function |
 | -------------| -------------------|
 | *findWavGet* | Locates data files in MVO CONT_ database and merges them if appropriate. |
@@ -98,7 +102,7 @@ getnPlot
 | *getnPlotHeli* | Runs *getnPlot* many times to create a helicorder-like plot. ||
 | *getnPlotIrish* | Runs *getnPlot* several times, suitable for events near Irish Ghaut. |
 | *getnPlotRemote* | Runs *getnPlot* on *opsproc2*. 
-| getnPlotRock | Runs getnPlot several times, suitable for rockfalls. |
+| *getnPlotRock* | Runs getnPlot several times, suitable for rockfalls. |
 | *getnPlotSpecial* | |
 | *getnPlotSpecial2* | |
 | *getnPlotSpecial3* | |
