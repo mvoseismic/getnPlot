@@ -24,7 +24,8 @@ set ylim works for multi-channel plots?
 ISSUES
 why did I get MBRV.SHZ instead of BHZ on 2023-02-06 23:08?
 - seems to be because I use "yesterday" for date NO IT'S NOT
-heli option doesn''t work
+XXheli option doesn''t work
+--heliscale doesn't work
 --source cont doesnt always work - PROBLEM IS FILES MERGED WITH SEISEI HAVING GAPS
 
 REVIEW tests

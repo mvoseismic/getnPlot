@@ -119,6 +119,9 @@ parser.add_argument('--downsample', type=int, default=1, help='Downsampling fact
 parser.add_argument('--saverms', action='store_true', help='Save RMS of signals in a text file')
 parser.add_argument('--nochaff', action='store_true', help='Remove all labelling, titles')
 parser.add_argument('--noscnl', action='store_true', help='Remove scnl label in panel')
+parser.add_argument('--heliwidth', type=float, default=15.0, help='Width (minutes) of helicorder plot', metavar='')
+parser.add_argument('--heliscale', type=float, default=0.0, help='Scaling of helicorder plot', metavar='')
+parser.add_argument('--printdatarange', action='store_true', help='Print out range of data for each channel')
 
 parser.add_argument('rest', nargs=argparse.REMAINDER)
 
@@ -209,6 +212,9 @@ dataDownsample = args.downsample
 saveRMS = args.saverms
 plotNochaff = args.nochaff
 plotNoscnl = args.noscnl
+plotHeliWidth= args.heliwidth
+plotHeliScale= args.heliscale
+printDataRange=args.printdatarange
 
 if plotTscale == 'd':
     plotTscale = 's'
@@ -606,6 +612,8 @@ if not runQuiet:
     print(' No green line:   ' + str(plotNogreen))
     print(' No text in plot: ' + str(plotNochaff))
     print(' No SCNL in plot: ' + str(plotNoscnl))
+    print(' Heli width (m):  ' + str(plotHeliWidth))
+    print(' Heli scaling:    ' + str(plotHeliScale))
 
     print( 'Data processing' )
     print(' Max frequency:   ' + str(dataFmax))
@@ -618,6 +626,7 @@ if not runQuiet:
     print(' Sqrt     :       ' + str(dataSqrt))
     print(' Log      :       ' + str(dataLog))
     print(' Downsampling:    ' + str(dataDownsample))
+    print(' Print data range:' + str(printDataRange))
 
     print( 'Output' )
     print(' Output dir:      ' + outDir)
@@ -925,6 +934,14 @@ if dataLog:
 
 
 
+############ Print data range for each channel 
+if printDataRange:
+    for trace in st2:
+        dataMax = max( trace.data )
+        dataMin = min( trace.data )
+        print(" data range: %4s %3s    min: %12.5f   max: %12.5f" % (trace.stats.station, trace.stats.channel,dataMax, dataMin))
+
+
 ############  Save data as miniseed and exit
 if runMode== "get":
     for trace in st2:
@@ -1010,8 +1027,33 @@ elif plotKind == "rockfall":
     plotFuncs = 'rods'
 
 elif plotKind == "heli":
-    thisFig = st2.plot(starttime=datimBeg, endtime=datimEnd,
-                   type='dayplot', equal_scale=equalScale, linewidth=plotLineWidth, show=False, size=plotSize2)
+    sta = stas[0]
+    if plotHeliScale > 0:
+        if sta == 'MSS1':
+            plotHeliScale = plotHeliScale * 1500
+        elif sta == 'MBHA':
+            plotHeliScale = plotHeliScale * 500
+        elif sta == 'MBLG':
+            plotHeliScale = plotHeliScale * 10000
+        elif sta == 'MBLY':
+            plotHeliScale = plotHeliScale * 10000
+        elif sta == 'MBRV':
+            plotHeliScale = plotHeliScale * 2500
+        elif sta == 'MBRY':
+            plotHeliScale = plotHeliScale * 5000
+        else:
+            plotHeliScale = plotHeliScale * 10000
+
+    thisFig = st2.plot( type='dayplot', 
+                       interval = int( plotHeliWidth ),
+                       right_vertical_labels=False,
+                       one_tick_per_line=False,
+                       size=plotSize2,
+                       vertical_scaling_range=plotHeliScale,
+                       show=False,
+                       tick_format='%H:%M',
+                       color=['k','r','b','g'],
+                       linewidth=plotLineWidth)
 
 else:
     if plotGrid:
