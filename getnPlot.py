@@ -604,6 +604,8 @@ if not runQuiet:
     print(' Plot grid:       ' + str(plotGrid))
     print(' Plot line width: ' + str(plotLineWidth))
     print(' No green line:   ' + str(plotNogreen))
+    print(' No text in plot: ' + str(plotNochaff))
+    print(' No SCNL in plot: ' + str(plotNoscnl))
 
     print( 'Data processing' )
     print(' Max frequency:   ' + str(dataFmax))
@@ -615,6 +617,7 @@ if not runQuiet:
     print(' Abs      :       ' + str(dataAbs))
     print(' Sqrt     :       ' + str(dataSqrt))
     print(' Log      :       ' + str(dataLog))
+    print(' Downsampling:    ' + str(dataDownsample))
 
     print( 'Output' )
     print(' Output dir:      ' + outDir)
@@ -625,11 +628,7 @@ if not runQuiet:
     print(' Spec in TFR:     ' + str(plotSpec))
     print(' RMS in lahar:    ' + str(plotRms))
     print(' Show plot:       ' + str(plotShow))
-
-    print(' Downsampling:    ' + str(dataDownsample))
     print(' Save RMS :       ' + str(saveRMS))
-    print(' No text in plot: ' + str(plotNochaff))
-    print(' No SCNL in plot: ' + str(plotNoscnl))
 
 
 ############  Exit when testing
@@ -639,6 +638,8 @@ if runMode == 'test':
 
 
 ############  Get all waveform data for interval
+if not runQuiet:
+    print( 'Processing' )
 st = Stream()
 
 if dataSource == 'auto':
@@ -666,7 +667,7 @@ if dataSource == 'auto':
         warnings.filterwarnings("default")
 
     if not runQuiet:
-        print('  Streams from ' + dataSource + ': ' + str(len(st)))
+        print(' Streams from ' + dataSource + ': ' + str(len(st)))
 
 elif dataSource == 'wws':
     # Waveserver
@@ -684,7 +685,8 @@ elif dataSource == "mseed":
 
 elif dataSource == "cont":
     command = 'findWavGet ' + eventDate + ' ' + eventTime + ' ' + str( int(windowDur/60.0) )
-    print( command )
+    if not runQuiet:
+        print( command )
     dataSource = subprocess.check_output( command, shell=True, text=True )
     dataSource = dataSource.rstrip()
     if os.path.isfile(dataSource):
@@ -694,19 +696,19 @@ elif dataSource == "cont":
 
 elif dataSource == "event":
     if not runQuiet:
-        print( 'source ' + dataSource + ' not implemented' )
+        print( ' Source ' + dataSource + ' not implemented' )
 
 else:
     # Event file
     if not os.path.isfile(dataSource):
         if not runQuiet:
-            print('  No file in local directory')
+            print(' No file in local directory')
         # If file doesnt exist, search in WAV/MVOE_ or WAV/ROD__
         try:
             dataSource = find(dataSource, pathWAV1)
         except:
             if not runQuiet:
-                print('  No file in', pathWAV1)
+                print(' No file in', pathWAV1)
             exit(0)
             #try:
             #    dataSource = find(dataSource, pathWAV2)
@@ -745,7 +747,7 @@ if chunks[0] == "":
             else:
                 idNew = "MV." + chunks[1] + ".." + chunks[3] + chunks[2]
             if not runQuiet:
-                print("Changing code from " + tr.id + " to " + idNew)
+                print(" Changing code from " + tr.id + " to " + idNew)
             tr.id = idNew
         sttemp += tr
     st = sttemp
@@ -894,7 +896,7 @@ elif chas == "all":
 
 
 if not runQuiet:
-    print('  Streams extracted for plot: ' + str(len(st2)))
+    print(' Streams extracted for plot: ' + str(len(st2)))
 
 
 
@@ -1090,7 +1092,7 @@ if plotFuncs == 'obspy' and plotYlim> 0:
 
 ############  Save plot as png
 if not runQuiet:
-    print('  Plot file: ' + filePlot)
+    print(' Plot file: ' + filePlot)
 thisFig.savefig(filePlot)
 
 
