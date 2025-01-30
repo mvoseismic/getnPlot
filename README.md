@@ -103,7 +103,7 @@ getnPlot
 | Script       | Function |
 | -------------| -------------------|
 | *findWavGet* | Locates data files in MVO CONT_ database and merges them if appropriate. |
-| *getnPlot*   | Bash wrapper script to setup Pythn environment for *getnPlot.py*. |
+| *getnPlot*   | Bash wrapper script to setup Python environment for *getnPlot.py*. |
 | *getnPlot*.py | Main program. |
 | *getnPlot3c* | Generates a 3C plot for each of 10 stations.|
 | *getnPlotHeli* | Runs *getnPlot* many times to create a helicorder-like plot. ||
