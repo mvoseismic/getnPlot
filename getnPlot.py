@@ -220,7 +220,6 @@ if plotTscale == 'd':
     plotTscale = 's'
 
 
-
 ############ Suppress all output if required
 if runQuiet:
     fd = os.open('/dev/null',os.O_WRONLY)
@@ -572,72 +571,72 @@ if plotKind == "forai":
 if not runQuiet:
 
     print( startTime )
-    print( "Hostname: " + hostname )
+    print( "Hostname:           " + hostname )
 
     print( 'Script running' )
-    print(' Mode:            ' + runMode)
-    print(' Quiet:           ' + str(runQuiet))
+    print(' Mode:               ' + runMode)
+    print(' Quiet:              ' + str(runQuiet))
 
-    print( 'Data' )
-    print(' Source:          ' + dataSource)
-    print(' WWS IP:          ' + wwsIP)
-    print(' WWS port:        ' + str(wwsPort))
-    print(' Station:         ' + dataStation)
-    print(' N stations:      ' + str( numberStations))
-    print(' Event date:      ' + eventDate)
-    print(' Event time:      ' + eventTime)
-    print(' Window pre:      ' + str(windowPre) + ' seconds')
-    print(' Window dur:      ' + str(windowDur) + ' seconds')
-    print(' Analysis window: ' + str(windowAnal) + ' seconds')
-    print(' Data begins:     ' + datimBeg.strftime("%Y-%m-%d %H:%M:%S"))
-    print(' Data ends:       ' + datimEnd.strftime("%Y-%m-%d %H:%M:%S"))
+    print( 'Data Options' )
+    print(' Source:             ' + dataSource)
+    print(' WWS IP:             ' + wwsIP)
+    print(' WWS port:           ' + str(wwsPort))
+    print(' Station:            ' + dataStation)
+    print(' N stations:         ' + str( numberStations))
+    print(' Event date:         ' + eventDate)
+    print(' Event time:         ' + eventTime)
+    print(' Window pre:         ' + str(windowPre) + ' seconds')
+    print(' Window dur:         ' + str(windowDur) + ' seconds')
+    print(' Analysis window:    ' + str(windowAnal) + ' seconds')
+    print(' Data begins:        ' + datimBeg.strftime("%Y-%m-%d %H:%M:%S"))
+    print(' Data ends:          ' + datimEnd.strftime("%Y-%m-%d %H:%M:%S"))
 
-    print( 'Plot' )
-    print(' Plot kind:       ' + plotKind)
-    print(' Plot shape:      ' + plotShape)
-    print(' Plot size:       ' + str(plotSize))
-    print(' Plot size (2):   ' + str(plotSize2))
-    print(' Plot timescale:  ' + plotTscale)
-    print(' Plot Y limit:    ' + str(plotYlim))
-    print(' Plot freq scale: ' + plotFscale)
-    print(' Plot Z scale:    ' + plotZscale)
-    print(' Max plot freq:   ' + str(plotFmax))
-    print(' Min plot freq:   ' + str(plotFmin))
-    print(' Max data freq:   ' + str(dataFmax))
-    print(' Min data freq:   ' + str(dataFmin))
-    print(' Plot title:      ' + plotTitle)
-    print(' Big title:       ' + str(plotTitleBig))
-    print(' Plot grid:       ' + str(plotGrid))
-    print(' Plot line width: ' + str(plotLineWidth))
-    print(' No green line:   ' + str(plotNogreen))
-    print(' No text in plot: ' + str(plotNochaff))
-    print(' No SCNL in plot: ' + str(plotNoscnl))
-    print(' Heli width (m):  ' + str(plotHeliWidth))
-    print(' Heli scaling:    ' + str(plotHeliScale))
+    print( 'Plot Options' )
+    print(' Plot kind:          ' + plotKind)
+    print(' Plot shape:         ' + plotShape)
+    print(' Plot size:          ' + str(plotSize))
+    print(' Plot size (2):      ' + str(plotSize2))
+    print(' Plot timescale:     ' + plotTscale)
+    print(' Plot Y limit:       ' + str(plotYlim))
+    print(' Plot freq scale:    ' + plotFscale)
+    print(' Plot Z scale:       ' + plotZscale)
+    print(' Max plot freq:      ' + str(plotFmax))
+    print(' Min plot freq:      ' + str(plotFmin))
+    print(' Max data freq:      ' + str(dataFmax))
+    print(' Min data freq:      ' + str(dataFmin))
+    print(' Plot title:         ' + plotTitle)
+    print(' Big title:          ' + str(plotTitleBig))
+    print(' Plot grid:          ' + str(plotGrid))
+    print(' Plot line width:    ' + str(plotLineWidth))
+    print(' No green line:      ' + str(plotNogreen))
+    print(' No text in plot:    ' + str(plotNochaff))
+    print(' No SCNL in plot:    ' + str(plotNoscnl))
+    print(' Heli width (m):     ' + str(plotHeliWidth))
+    print(' Heli scaling:       ' + str(plotHeliScale))
 
-    print( 'Data processing' )
-    print(' Max frequency:   ' + str(dataFmax))
-    print(' Min frequency:   ' + str(dataFmin))
-    print(' HP filter:       ' + str(dataHPfilt))
-    print(' LP filter:       ' + str(dataLPfilt))
-    print(' Normalize:       ' + dataNormalize)
-    print(' Integrate:       ' + str(dataIntegrate))
-    print(' Abs      :       ' + str(dataAbs))
-    print(' Sqrt     :       ' + str(dataSqrt))
-    print(' Log      :       ' + str(dataLog))
-    print(' Downsampling:    ' + str(dataDownsample))
-    print(' Print data range:' + str(printDataRange))
+    print( 'Data processing Options' )
+    print(' Max frequency:      ' + str(dataFmax))
+    print(' Min frequency:      ' + str(dataFmin))
+    print(' HP filter:          ' + str(dataHPfilt))
+    print(' LP filter:          ' + str(dataLPfilt))
+    print(' Normalize:          ' + dataNormalize)
+    print(' Integrate:          ' + str(dataIntegrate))
+    print(' Plot abs(data):     ' + str(dataAbs))
+    print(' Plotsqrt(data):     ' + str(dataSqrt))
+    print(' Plot log(data):     ' + str(dataLog))
+    print(' Downsampling:       ' + str(dataDownsample))
+    print(' Print data range:   ' + str(printDataRange))
 
-    print( 'Output' )
-    print(' Output dir:      ' + outDir)
-    print(' Filename tag:    ' + filenameTag)
-    print(' Stations tag:    ' + fileStaTag)
-    print(' Plot file:       ' + filePlot)
-    print(' Data file:       ' + fileMseedOut)
-    print(' Spec in TFR:     ' + str(plotSpec))
-    print(' RMS in lahar:    ' + str(plotRms))
-    print(' Show plot:       ' + str(plotShow))
-    print(' Save RMS :       ' + str(saveRMS))
+    print( 'Output Options' )
+    print(' Output dir:         ' + outDir)
+    print(' Filename tag:       ' + filenameTag)
+    print(' Stations tag:       ' + fileStaTag)
+    print(' Plot file:          ' + filePlot)
+    print(' Data file:          ' + fileMseedOut)
+    print(' Spec in TFR:        ' + str(plotSpec))
+    print(' RMS in lahar:       ' + str(plotRms))
+    print(' Show plot:          ' + str(plotShow))
+    print(' Save RMS:           ' + str(saveRMS))
 
 
 ############  Exit when testing
@@ -648,7 +647,8 @@ if runMode == 'test':
 
 ############  Get all waveform data for interval
 if not runQuiet:
-    print( 'Processing' )
+    print( 'Fetching Data' )
+
 st = Stream()
 
 if dataSource == 'auto':
@@ -913,6 +913,9 @@ if not runQuiet:
 # Deal with overlaps etc
 #st2.merge(method=1)
 # Detrend
+if not runQuiet:
+    print( 'Processing Data' )
+
 st2.detrend('demean')
 if dataLPfilt > 0.0:
     st2.filter("lowpass", freq=dataLPfilt)
@@ -965,6 +968,9 @@ if saveRMS:
 
 
 ############  Plot signal normalization
+if plotKind == "heli":
+    dataNormalize='no'
+
 if dataNormalize == 'yes':
     equalScale = True
 elif dataNormalize == '3c':
@@ -982,6 +988,9 @@ else:
 plotFuncs = 'obspy'
 
 ############  Create plot
+if not runQuiet:
+    print( 'Plotting Data' )
+
 if plotKind == "tfr":
     thisFig = rodstfr.plot_tfr(tr.data, dt=tr.stats.delta, fmin=plotFmin,
     mode='sqrt', fmax=plotFmax, w0=16., nf=128, fft_zero_pad_fac=4, cmap='jet', show=False )
@@ -1029,6 +1038,7 @@ elif plotKind == "rockfall":
 elif plotKind == "heli":
     sta = stas[0]
     if plotHeliScale > 0:
+        plotHeliScale = 1.0 / plotHeliScale
         if sta == 'MSS1':
             plotHeliScale = plotHeliScale * 1500
         elif sta == 'MBHA':
