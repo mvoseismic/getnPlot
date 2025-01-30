@@ -39,11 +39,12 @@ getnPlot
 ## Options
 
 ```
-  -h, --help        show this help message and exit
+  -h, --help        show help message and exit
   -v, --version     show program's version number and exit
   --mode            Mode of operation: getnplot | get | plot | test (default: getnplot)
   -q, --quiet       No screen output (default: False)
-  --source          Data source (auto tries wws then mseed then cont): auto | wws | mseed | cont | event | filename (default: auto)
+  --source          Data source: auto | wws | mseed | cont | event | filename (default: auto)
+                    	auto tries wws then mseed then cont
   --wwsip           Hostname or IP address of winston wave server (default: 172.17.102.60)
   --wwsport         Port of winston wave server (default: 16022)
   -k , --kind       Kind of plot (use all for get only): allZ | all3C | closeZ | close3C | radianZ | radian3C | Z | specialZ | spectrumZ | 3C | special3C | irishZ | irish3C | lahar | tfr | forAI | rockfall | partmot | all | allplusZ | strain | strainplus | infra | heli | longsgram | stringthing (default: allZ)
@@ -66,6 +67,7 @@ getnPlot
   --show            Show plot on screen as well as saving it (default: False)
   --grid            Add time-axis grid to seismograms (default: False)
   --title           Title for plot, defaults gives all information. Special arguments: datetime, date, time, tag (default: None)
+                    	Underscores in string are replaced by spaces in title.
   --bigtitle        Big bold title. (default: False)
   --nogreen         Do not plot green line for arrival/event time. (default: False)
   --linewidth       Thickness of plotted line (default: 0.5)
@@ -90,10 +92,13 @@ getnPlot
   --noscnl          Remove scnl label in panel (default: False)
   --heliwidth       Width (minutes) of helicorder plot (default: 15.0)
   --heliscale       Scaling of helicorder plot (default: 0.0)
+                    	0: auto-scaling
+                    	1: pre-set scaling
+                    	>1: larger
+                    	<1: smaller
   --printdatarange  Print out range of data for each channel (default: False)
 ```
 
-``````
 ## Scripts (as of 2025-01-23)
 | Script       | Function |
 | -------------| -------------------|
@@ -124,6 +129,7 @@ Plot all default Z channels for a 60-second window with 10 seconds before time g
 ```
 getnPlot 21:23
 getnPlot 01:12:59.1
+getnPlot 20250123-1220
 ```
 Plot all default Z channels for a 120-second window with 40 seconds before time given.
 ```
@@ -133,7 +139,10 @@ Plot three Z channels for a 20-minute window with two minutes before time given.
 ```
 getnPlot --time 01:12:59.1 --pre 2m --dur 20m --kind Z --sta MSS1,MBFR,MBLG
 ```
-
+Plot a two-day helicorder
+```
+getnPlot --date 2025-01-16 --time 16:00 --pre 0h --dur 48h --kind Z --sta MSS1 --kind heli --source mseed --hpfilt 5.0 --heliwidth 60 --shape square --heliscale 1.5
+```
 ## Author
 
 Roderick Stewart, Dormant Services Ltd
@@ -141,7 +150,6 @@ Roderick Stewart, Dormant Services Ltd
 rod@dormant.org
 
 https://services.dormant.org/
-
 
 ## Version History
 
