@@ -145,7 +145,16 @@ eventDate = args.date
 eventTime = args.time
 eventTimeArg = ''.join( args.rest )
 if eventTimeArg:
-    eventTime = eventTimeArg
+    if ':' in eventTimeArg:
+        eventTime = eventTimeArg
+    elif '-' in eventTimeArg:
+        yyyy = eventTimeArg[0:4]
+        mm = eventTimeArg[4:6]
+        dd = eventTimeArg[6:8]
+        HH = eventTimeArg[9:11]
+        MM = eventTimeArg[11:]
+        eventTime = ':'.join( [HH, MM, '00'] )
+        eventDate = '-'.join( [yyyy, mm, dd] )
 plotTscale= args.tscale
 plotYlim=args.ylim
 wpre = args.pre
