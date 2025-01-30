@@ -375,10 +375,10 @@ nslcWant = {
     'WI.DHS.00.HHZ', 'WI.DHS.00.HHN', 'WI.DHS.00.HHE',
     'NA.SABA..BHZ', 'NA.SABA..BHN', 'NA.SABA..BHE',
     'TR.SVT..HHZ', 'TR.SVT..HHN', 'TR.SVT..HHE',
-    'TR.DSLB..HHZ', 'TR.DSLB..HHN', 'TR.DSLB..HHE'
+    'TR.DSLB..HHZ', 'TR.DSLB..HHN', 'TR.DSLB..HHE',
+    'MC.OLV1..BHZ', 'MC.OLV1..BHE', 'MC.OLV1..BHN',
+    'MC.TRNT..BHZ', 'MC.TRNT..BHE', 'MC.TRNT..BHN'
 }
-#    'MC.OLV1..BHZ', 'MC.OLV1..BHE', 'MC.OLV1..BHN',
-#    'MC.TRNT..BHZ', 'MC.TRNT..BHE', 'MC.TRNT..BHN',
 
 
 
@@ -436,7 +436,7 @@ elif plotKind == "all":
             "MBHA", "MBGH", "MBWH", "MBFL", "MBGB", "MBRV"]
     chas = "3c"
 elif plotKind == "strain":
-    stas = ["AIRS", "OLV1", "TRNT"]
+    stas = ["OLV1", "TRNT"]
     chas = "z"
 elif plotKind == "strainplus":
     stas = ["AIRS", "OLV1", "TRNT"]
@@ -445,7 +445,7 @@ elif plotKind == "strainplus":
 elif plotKind == "infra":
     stas =["MBFL"] 
     chas = "h"
-elif plotKind == "allplusZ":
+elif plotKind == "allplusz":
     stas = ["MSS1", "MBFR", "MBLY", "MBLG", "MBRY", "MBBY",
             "MBHA", "MBGH", "MBWH", "MBFL", "MBGB", "TRNT", "OLV1", "MBRV"]
     chas = "z"
@@ -580,7 +580,7 @@ if plotKind == "forai":
 if not runQuiet:
 
     print( startTime )
-    print( "Hostname:           " + hostname )
+    print( 'Hostname:            ' + hostname )
 
     print( 'Script running' )
     print(' Mode:               ' + runMode)
