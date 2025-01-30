@@ -499,6 +499,9 @@ if filePlot == "":
     if plotKind == "allz":
         filePlot = filenameSeparator2.join([datimEventString,
             '-'+filenameTag, plotKind, windowString])
+    elif plotKind == "allplusz":
+        filePlot = filenameSeparator2.join([datimEventString,
+            '-'+filenameTag, plotKind, windowString])
     elif plotKind == "all3c":
         filePlot = filenameSeparator2.join([datimEventString,
             '-'+filenameTag, plotKind, windowString])

@@ -8,7 +8,6 @@ check if 3C plots are normalized
 SUDDENLY FILE NAMES HAVE SECONDS BY DEFAULT - then not
 noflag time doesn't work unless at end
 green line doesn't seem to be plotted in right place, see 20230420-1545--Distal_VT-MBLG-3C-5s2.png
-type allplusZ isn't working
 strain works, but not sure if it can cope with MC seismic channels at same time
 fmax for tfr doesn't plot
 use mseed for default if wws not working
@@ -16,8 +15,6 @@ use plotaday code for faulty mseed files
 multi-day from mseed files
 --plotfile doesn't set tag
 --plotfile doesn't work properly with -- in filename
-XX--title doesnt work for date or time or datetime for today or now or yesterday
-XXadd no title option
 cont might not get all data before arrival
 set ylim works for multi-channel plots?
 

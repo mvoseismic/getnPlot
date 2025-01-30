@@ -48,6 +48,8 @@ getnPlot
   --wwsip           Hostname or IP address of winston wave server (default: 172.17.102.60)
   --wwsport         Port of winston wave server (default: 16022)
   -k , --kind       Kind of plot (use all for get only): allZ | all3C | closeZ | close3C | radianZ | radian3C | Z | specialZ | spectrumZ | 3C | special3C | irishZ | irish3C | lahar | tfr | forAI | rockfall | partmot | all | allplusZ | strain | strainplus | infra | heli | longsgram | stringthing (default: allZ)
+                    	allZ: all MVO vertical seismic stations
+                    	allplusZ: all vertical seismic stations, including CALIPSO
   --sta             Station(s) to be plotted, comma separated) (not used in some kinds of plot). (default: MSS1)
   -d , --date       Date of event (UTC): today | yesterday | yyyy-mm-dd | yyyy.jjj (default: today)
   -t , --time       Time of event (UTC): hh:mm | hh:mm:ss | hh:mm:ss.s | now |now-X | now-Xs | now-Xm (default: now)
