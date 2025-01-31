@@ -1028,6 +1028,7 @@ elif plotKind == "specialz" and numberStations == 1:
 
 elif plotKind == "spectrumz" and numberStations == 1:
     thisFig = rodsPythonThings.plotZSpectrum( st2, windowPre, plotSpec, plotFscale, plotZscale, plotFmin, plotFmax )
+    thisFig.set_size_inches(plotSize2[0]/100.0, plotSize2[1]/100.0)
     plotFuncs = 'rods'
 
 elif plotKind == "special3c" and numberStations == 1:

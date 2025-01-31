@@ -1,0 +1,94 @@
+Test 008:
+../getnPlot.py --plotfile test_008_kind_specialZ --today --time 01:10:00.0 --kind specialZ
+
+/home/seisan/src/pythonModules/rodsPlotTfr.py:59: RuntimeWarning: divide by zero encountered in log10
+  f = np.logspace(np.log10(fmin), np.log10(fmax), nf)
+/home/seisan/anaconda3/envs/obspy/lib/python3.10/site-packages/numpy/core/function_base.py:158: RuntimeWarning: invalid value encountered in multiply
+  y *= step
+/home/seisan/anaconda3/envs/obspy/lib/python3.10/site-packages/numpy/core/function_base.py:168: RuntimeWarning: invalid value encountered in add
+  y += start
+/home/seisan/src/pythonModules/rodsPlotTfr.py:82: RuntimeWarning: invalid value encountered in divide
+  psih = psi(-1 * (t - t[-1] / 2.) / a).conjugate() / np.abs(a) ** .5
+/home/seisan/src/pythonModules/rodsPythonThings.py:263: RuntimeWarning: divide by zero encountered in log10
+  t, np.logspace(np.log10(plotFmin), np.log10(plotFmax),
+2025-01-31 17:13:09.141542
+Hostname:            opsproc3
+Script running
+ Mode:               getnplot
+ Quiet:              False
+Data Options
+ Source:             auto
+ WWS IP:             172.17.102.60
+ WWS port:           16022
+ Station:            MSS1
+ N stations:         1
+ Event date:         today
+ Event time:         01:10:00.0
+ Window pre:         10.0 seconds
+ Window dur:         60.0 seconds
+ Analysis window:    30.0 seconds
+ Data begins:        2025-01-31 01:09:50
+ Data ends:          2025-01-31 01:10:50
+Plot Options
+ Plot kind:          specialz
+ Plot shape:         landscape
+ Plot size:          1920
+ Plot size (2):      (1920, 1280)
+ Plot timescale:     s
+ Plot Y limit:       0
+ Plot freq scale:    linear
+ Plot Z scale:       sqrt
+ Max plot freq:      100.0
+ Min plot freq:      0
+ Max data freq:      100.0
+ Min data freq:      0
+ Plot title:         2025-01-31 01:10:00.0  0
+ Big title:          False
+ Plot grid:          False
+ Plot line width:    0.5
+ No green line:      False
+ No text in plot:    False
+ No SCNL in plot:    False
+ Heli width (m):     15.0
+ Heli scaling:       0.0
+Data processing Options
+ Max frequency:      100.0
+ Min frequency:      0
+ HP filter:          0.0
+ LP filter:          0.0
+ Normalize:          no
+ Integrate:          False
+ Plot abs(data):     False
+ Plotsqrt(data):     False
+ Plot log(data):     False
+ Downsampling:       1
+ Print data range:   False
+Output Options
+ Output dir:         .
+ Filename tag:       
+ Stations tag:       MSS1-Z
+ Plot file:          ./test_008_kind_specialZ.png
+ Data file:          ./test_008_kind_specialZ.mseed
+ Spec in TFR:        False
+ RMS in lahar:       True
+ Show plot:          False
+ Save RMS:           False
+Fetching Data
+ Streams from waveserver 172.17.102.60: 150
+ Streams extracted for plot: 1
+Processing Data
+Plotting Data
+Traceback (most recent call last):
+  File "/home/seisan/Dropbox/MVO/src/getnPlot/tests/../getnPlot.py", line 1026, in <module>
+    thisFig = rodsPythonThings.plotZManyWays( st2, windowPre, plotSpec, plotFscale, plotZscale, plotFmin, plotFmax )
+  File "/home/seisan/src/pythonModules/rodsPythonThings.py", line 265, in plotZManyWays
+    img_tfr = rpt._pcolormesh_same_dim(ax_tfr, x, y, _tfr[0], cmap=cmap)
+  File "/home/seisan/src/pythonModules/rodsPlotTfr.py", line 30, in _pcolormesh_same_dim
+    return ax.pcolormesh(x, y, v, shading='nearest', **kwargs)
+  File "/home/seisan/anaconda3/envs/obspy/lib/python3.10/site-packages/matplotlib/__init__.py", line 1465, in inner
+    return func(ax, *map(sanitize_sequence, args), **kwargs)
+  File "/home/seisan/anaconda3/envs/obspy/lib/python3.10/site-packages/matplotlib/axes/_axes.py", line 6292, in pcolormesh
+    X, Y, C, shading = self._pcolorargs('pcolormesh', *args,
+  File "/home/seisan/anaconda3/envs/obspy/lib/python3.10/site-packages/matplotlib/axes/_axes.py", line 5811, in _pcolorargs
+    raise ValueError(
+ValueError: x and y arguments to pcolormesh cannot have non-finite values or be of type numpy.ma.MaskedArray with masked values

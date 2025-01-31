@@ -1,8 +1,0 @@
-#!/usr/bin/bash
-
-getnPlot --hpfilt 5.0 --source mseed --date 2020-06-11 --time 16:01:34 --dur 180m --pre 10m --tag 1-raw --kind Z --shape xxxlong --sta MSS1 
-getnPlot --hpfilt 5.0 --source mseed --date 2020-06-11 --time 16:01:34 --dur 180m --pre 10m --tag 2-abs --kind Z --shape xxxlong --sta MSS1 --abs
-getnPlot --hpfilt 5.0 --source mseed --date 2020-06-11 --time 16:01:34 --dur 180m --pre 10m --tag 3-abs-sqrt --kind Z --shape xxxlong --sta MSS1 --abs --sqrt
-getnPlot --hpfilt 5.0 --source mseed --date 2020-06-11 --time 16:01:34 --dur 180m --pre 10m --tag 4-stringthing --kind stringthing --shape xxxlong
-
-magick montage 202*.png -tile 1x -geometry +0+0 fig--testStringthing.png
