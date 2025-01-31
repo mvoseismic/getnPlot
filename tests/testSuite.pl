@@ -128,7 +128,7 @@ if( $testsToRun eq "0" || $testsToRun eq "4" ){
 # SIZE tests
 if( $testsToRun eq "0" || $testsToRun eq "5" ){
     $testGroup = 'size';
-    my $testSize = 800;
+    my $testSize = 2800;
     foreach my $testShape (@shapes){
         $testNumber++;
         $testTag = sprintf( "test_%03d_%s_%s", $testNumber, $testGroup, $testShape );
