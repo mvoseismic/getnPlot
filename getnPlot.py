@@ -313,9 +313,9 @@ elif plotShape == "xlong":
 elif plotShape == "xxlong":
     plotSize2 = (plotSize, int(plotSize/5.0))
 elif plotShape == "xxxlong":
-    plotSize2 = (2*plotSize, 2*int(plotSize/7.5))
+    plotSize2 = (plotSize, int(plotSize/7.5))
 elif plotShape == "xxxxlong":
-    plotSize2 = (2*plotSize, 2*int(plotSize/20))
+    plotSize2 = (2*plotSize, 2*int(plotSize/20.))
 elif plotShape == "thin":
     plotSize2 = (int(plotSize/2.5), plotSize)
 
@@ -1004,6 +1004,7 @@ if not runQuiet:
     print( 'Plotting Data' )
 
 if plotKind == "tfr":
+    tr = st2[0]
     thisFig = rodstfr.plot_tfr(tr.data, dt=tr.stats.delta, fmin=plotFmin,
     mode='sqrt', fmax=plotFmax, w0=16., nf=128, fft_zero_pad_fac=4, cmap='jet', show=False )
     thisFig.set_size_inches(plotSize2[0]/100.0, plotSize2[1]/100.0)

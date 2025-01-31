@@ -1,7 +1,7 @@
 Test 007:
-../getnPlot.py --plotfile test_007_kind_Z --today --time 01:10:00.0 --kind Z
+../getnPlot.py --plotfile test_007_size_xxxlong --today --time 01:00:00.0 --shape xxxlong --size 800
 
-2025-01-31 17:13:05.941089
+2025-01-31 17:35:52.535815
 Hostname:            opsproc3
 Script running
  Mode:               getnplot
@@ -11,19 +11,19 @@ Data Options
  WWS IP:             172.17.102.60
  WWS port:           16022
  Station:            MSS1
- N stations:         1
+ N stations:         12
  Event date:         today
- Event time:         01:10:00.0
+ Event time:         01:00:00.0
  Window pre:         10.0 seconds
  Window dur:         60.0 seconds
  Analysis window:    30.0 seconds
- Data begins:        2025-01-31 01:09:50
- Data ends:          2025-01-31 01:10:50
+ Data begins:        2025-01-31 00:59:50
+ Data ends:          2025-01-31 01:00:50
 Plot Options
- Plot kind:          z
- Plot shape:         landscape
- Plot size:          1920
- Plot size (2):      (1920, 1280)
+ Plot kind:          allz
+ Plot shape:         xxxlong
+ Plot size:          800
+ Plot size (2):      (800, 106)
  Plot timescale:     s
  Plot Y limit:       0
  Plot freq scale:    linear
@@ -32,7 +32,7 @@ Plot Options
  Min plot freq:      0
  Max data freq:      100.0
  Min data freq:      0
- Plot title:         2025-01-31 01:10:00.0  0
+ Plot title:         2025-01-31 01:00:00.0  0
  Big title:          False
  Plot grid:          False
  Plot line width:    0.5
@@ -56,17 +56,17 @@ Data processing Options
 Output Options
  Output dir:         .
  Filename tag:       
- Stations tag:       MSS1-Z
- Plot file:          ./test_007_kind_Z.png
- Data file:          ./test_007_kind_Z.mseed
+ Stations tag:       MSS1_MBFR_MBLY_MBLG_MBRY_MBBY_MBHA_MBGH_MBWH_MBFL_MBGB_MBRV-Z
+ Plot file:          ./test_007_size_xxxlong.png
+ Data file:          ./test_007_size_xxxlong.mseed
  Spec in TFR:        False
  RMS in lahar:       True
  Show plot:          False
  Save RMS:           False
 Fetching Data
- Streams from waveserver 172.17.102.60: 150
- Streams extracted for plot: 1
+ Streams from waveserver 172.17.102.60: 159
+ Streams extracted for plot: 12
 Processing Data
 Plotting Data
- Plot file: ./test_007_kind_Z.png
-Elapsed time:  0:00:02.204062
+ Plot file: ./test_007_size_xxxlong.png
+Elapsed time:  0:00:02.874729

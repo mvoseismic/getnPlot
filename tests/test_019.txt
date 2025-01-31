@@ -1,3 +1,0 @@
-Test 019:
-../getnPlot.py --plotfile test_019_kind_all --today --time 01:10:00.0 --kind all
-

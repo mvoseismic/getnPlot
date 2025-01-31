@@ -1,3 +1,0 @@
-Test 016:
-../getnPlot.py --plotfile test_016_kind_forAI --today --time 01:10:00.0 --kind forAI
-

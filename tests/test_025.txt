@@ -1,3 +1,0 @@
-Test 025:
-../getnPlot.py --plotfile test_025_kind_longsgram --today --time 01:10:00.0 --kind longsgram
-

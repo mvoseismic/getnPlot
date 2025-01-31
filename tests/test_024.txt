@@ -1,3 +1,0 @@
-Test 024:
-../getnPlot.py --plotfile test_024_kind_heli --yesterday --time 00:00 --dur 120m --pre 0m --kind heli
-

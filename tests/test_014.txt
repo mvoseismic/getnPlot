@@ -1,3 +1,0 @@
-Test 014:
-../getnPlot.py --plotfile test_014_kind_lahar --today --time 01:10:00.0 --kind lahar
-
