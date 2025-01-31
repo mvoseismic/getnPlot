@@ -19,7 +19,7 @@ import numpy as np
 import statistics
 import gc
 
-sys.path.append( '/'.join( [os.path.expanduser('~'), 'STUFF/src/pythonModules' ] ) )
+sys.path.append( '/'.join( [os.path.expanduser('~'), 'src/pythonModules' ] ) )
 
 import rodsPythonThings
 import rodsPlotTfr as rodstfr
@@ -181,6 +181,8 @@ def plotPanacea( datimBeg, sta, gain, runQuiet ):
     fig = plt.figure()
     fig.set_size_inches(plotSize[0]/100.0, plotSize[1]/100.0)
 
+    fontSize = 24
+
     xlabelx = 0.5
     xlabely = 1.01
     ylabel = 'UTC (LT)'
@@ -219,19 +221,19 @@ def plotPanacea( datimBeg, sta, gain, runQuiet ):
     ax_rms.set_xlim( 0, dataRmsLimit)
     ax_rms.set_ylim(-600, tday)
     ax_rms.invert_yaxis()
-    ax_rms.tick_params(axis='both', direction='inout', top=False, bottom=False, left=True, right=True, labelleft=False, labelright=True, labelsize=fontSize-3, length=16, width=2)
+    ax_rms.tick_params(axis='both', direction='inout', top=False, bottom=False, left=True, right=True, labelleft=False, labelright=True, labelsize=fontSize-4, length=16, width=2)
     ax_rms.grid( visible=True, which='major', axis='y', linewidth=1 )
     ax_rms.set_yticks( tTicks )
-    tit = "%dm RMS (1Hz HP)" % (minutesRMS)
+    tit = "%d min RMS (1Hz HP)" % (minutesRMS)
     plt.xlabel( tit, fontsize=fontSize, fontweight='bold' )
     ax_rms.xaxis.set_label_position('top')
     ax_rms.set_yticklabels( tTickLabels )
     Axis.set_label_coords(ax_rms.xaxis, xlabelx, xlabely)
-    plt.ylabel( ylabel, rotation='horizontal', fontsize=fontSize-3 )
+    plt.ylabel( ylabel, rotation='horizontal', fontsize=fontSize-4 )
     Axis.set_label_coords(ax_rms.yaxis, ylabelx, ylabely)
 
-    fig.text( x4, 0.7*y1, 'Fixed magnification', fontsize=fontSize-2, color='blue', ha='center' )
-    fig.text( x4, 0.4*y1, 'Normalized to peak', fontsize=fontSize-2, color='red', ha='center' )
+    fig.text( x4, 0.7*y1, 'Fixed magnification', fontsize=fontSize-4, color='blue', ha='center' )
+    fig.text( x4, 0.4*y1, 'Normalized to peak', fontsize=fontSize-4, color='red', ha='center' )
 
 
     # Plot helicorder
@@ -258,39 +260,40 @@ def plotPanacea( datimBeg, sta, gain, runQuiet ):
     ax_hel.set_ylim( 0, nrows+1)
     ax_hel.set_xticks( np.arange(0, minutesLine, step=1) )
     ax_hel.set_yticks( np.arange(0, nrows+1, step=6) )
-    ax_hel.tick_params(axis='both', direction='out', top=False, bottom=True, left=True, right=True, labelleft=True, labelright=False, labelsize=fontSize-3, length=16, width=2)
+    ax_hel.tick_params(axis='both', direction='out', top=False, bottom=True, left=True, right=True, labelleft=True, labelright=False, labelsize=fontSize-4, length=16, width=2)
     plt.xlabel( 'Helicorder', fontsize=fontSize, fontweight='bold' )
     ax_hel.xaxis.set_label_position('top')
     Axis.set_label_coords(ax_hel.xaxis, xlabelx, xlabely)
     tTickLabels.reverse()
     ax_hel.set_yticklabels( tTickLabels )
-    plt.ylabel( ylabel, rotation='horizontal', fontsize=fontSize-3 )
+    plt.ylabel( ylabel, rotation='horizontal', fontsize=fontSize-4 )
     ylabelx = -0.1
     Axis.set_label_coords(ax_hel.yaxis, ylabelx, ylabely)
 
-    fig.text( 0.5*(x2+x1), 0.4*y1, 'Minutes', fontsize=fontSize-2, ha='center' )
+    fig.text( 0.5*(x2+x1), 0.4*y1, 'Minutes', fontsize=fontSize-4, ha='center' )
 
 
     # Plot spectrogram
     npts = len( data )
     fnyq = samprate/2.0
-    nfft = util.next_pow_2(npts) ######### * 4
-    fff, ttt, sss = signal.spectrogram( data, fs=samprate, window='hamming', nperseg=256, noverlap=128, nfft=nfft, detrend='constant' )
+    nfft = util.next_pow_2(npts) ###### * 4
+    #fff, ttt, sss = signal.spectrogram( data, fs=samprate, window='hamming', nperseg=256, noverlap=128, nfft=nfft, detrend='constant' )
+    fff, ttt, sss = signal.spectrogram( data, fs=samprate, scaling='spectrum' )
     sss = np.sqrt( np.abs(sss) )
     ssss = sss.transpose()
     ax_sgr = fig.add_axes([ x2, y1, x3-x2, y2-y1 ])
     ax_sgr.pcolormesh( fff, ttt, ssss, shading='gouraud', cmap='jet' )
     ax_sgr.set_yscale("linear")
-    ax_sgr.set_xlim(0.0, 100.0)
+    ax_sgr.set_xlim(0.0, fnyq)
     ax_sgr.set_ylim(ttt[0], ttt[-1])
     ax_sgr.invert_yaxis()
     ax_sgr.yaxis.set_major_formatter(NullFormatter())
-    ax_sgr.tick_params(axis='both', direction='out', top=False, bottom=True, left=False, right=False, labelsize=fontSize-3, length=16, width=2)
+    ax_sgr.tick_params(axis='both', direction='out', top=False, bottom=True, left=False, right=False, labelsize=fontSize-4, length=16, width=2)
     plt.xlabel( 'Spectrogram', fontsize=fontSize, fontweight='bold' )
     ax_sgr.xaxis.set_label_position('top')
     Axis.set_label_coords(ax_sgr.xaxis, xlabelx, xlabely)
 
-    fig.text( 0.5*(x3+x2), 0.4*y1, 'Frequency (Hz)', fontsize=fontSize-2, ha='center' )
+    fig.text( 0.5*(x3+x2), 0.4*y1, 'Frequency (Hz)', fontsize=fontSize-4, ha='center' )
 
     plotTitle = '  '.join([ sta, datimBeg.strftime("%Y-%m-%d") ])
     fig.suptitle( plotTitle, x=0.01, y=0.99, fontsize=fontSize, fontweight='bold', ha='left' )
