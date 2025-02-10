@@ -1,0 +1,34 @@
+#!/usr/bin/bash
+# 
+# Runs getnPlot.py to create a tiled plot of six tfr plots
+#
+# R.C.Stewart, 2025-02-10
+
+
+mkdir -p tmpGetNPlot
+cd tmpGetNPlot
+rm -f *.*
+
+getnPlot -q "$@"
+files=(*)
+fname=$files
+fname2=${fname//allz/tiledTfrs}
+rm -f *.png
+
+getnPlot -q --kind tfr --sta MBLY --title sta --plotfile 1-MBLY "$@" 
+getnPlot -q --kind tfr --sta MSS1 --title sta --plotfile 2-MSS1 "$@" 
+getnPlot -q --kind tfr --sta MBLG --title sta --plotfile 3-MBLG "$@" 
+getnPlot -q --kind tfr --sta MBBY --title sta --plotfile 4-MBBY "$@" 
+getnPlot -q --kind tfr --sta MBFR --title sta --plotfile 5-MBFR "$@" 
+getnPlot -q --kind tfr --sta MBRY --title sta --plotfile 6-MBRY "$@" 
+
+conda deactivate >/dev/null 2>&1
+
+magick mogrify -crop 1633x1268+110+10 *.png
+
+magick montage *.png -tile 3x2 -geometry +0+0 ${fname2}
+
+mv ${fname2} ..
+
+cd ..
+rm -r tmpGetNPlot

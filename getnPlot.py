@@ -92,7 +92,7 @@ parser.add_argument('--plotspec', action='store_true', help='No spectrum in TFR 
 parser.add_argument('--plotnorms', action='store_true', help='No RMS in lahar plot')
 parser.add_argument('--show', action='store_true', help='Show plot on screen as well as saving it')
 parser.add_argument('--grid', action='store_true', help='Add time-axis grid to seismograms')
-parser.add_argument('--title', help='Title for plot, defaults gives all information. Special arguments: datetime, date, time, tag', metavar='')
+parser.add_argument('--title', help='Title for plot, defaults gives all information. Special arguments: sta, datetime, date, time, tag', metavar='')
 parser.add_argument('--bigtitle', action='store_true', help='Big bold title.')
 parser.add_argument('--nogreen', action='store_true', help='Do not plot green line for arrival/event time.')
 parser.add_argument('--linewidth', type=float, default=0.5, help='Thickness of plotted line', metavar='')
@@ -552,6 +552,8 @@ plotTitle = "  ".join( [plotTitle2, plotTitle] )
 if plotTitleArg:
     if plotTitleArg == "datetime":
         plotTitle = evDatim.strftime("%Y-%m-%d %H:%M:%S.%f")[:-5]
+    elif plotTitleArg == "sta":
+        plotTitle = stas[0]
     elif plotTitleArg == "date":
         plotTitle = evDatim.strftime("%Y-%m-%d")
     elif plotTitleArg == "time":
