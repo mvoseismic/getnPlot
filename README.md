@@ -101,7 +101,7 @@ getnPlot
   --printdatarange  Print out range of data for each channel (default: False)
 ```
 
-## Scripts (as of 2025-01-23)
+## Scripts (as of 2025-02-10)
 | Script       | Function |
 | -------------| -------------------|
 | *findWavGet* | Locates data files in MVO CONT_ database and merges them if appropriate. |
