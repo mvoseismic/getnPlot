@@ -23,6 +23,6 @@ getnPlot --kind 3C --tag Rockfall --sta MBLY "$@"
 getnPlot --kind 3C --tag Rockfall --sta MBLG "$@"
 getnPlot --kind 3C --tag Rockfall --sta MBFR "$@"
 getnPlot --kind rockfall --tag Rockfall "$@"
-getnPlotSpecial --tag Rockfall "$@"
+getnPlotSpecial2 --tag Rockfall "$@"
 
 conda deactivate >/dev/null 2>&1
