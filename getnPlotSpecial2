@@ -17,19 +17,20 @@ mkdir -p tmpGetNPlot
 cd tmpGetNPlot
 rm -f *.*
 
-#getnPlot -q --pre 5 --dur 30 --shape portrait --kind Z --sta MSS1,MBFR,MBLG,MBLY,MBRY,MBBY,MBGH,MBWH --hpfilt $freqHP "$@" 
 getnPlot -q --pre 5 --dur 30 --shape portrait --hpfilt $freqHP "$@" 
-getnPlot -q --pre 2 --dur 10 --shape portrait --kind 3C --sta MBFR,MBLY,MBLG --hpfilt $freqHP "$@"
+getnPlot -q --pre 2 --dur 10 --shape portrait --kind 3C --sta MBFR,MBLY,MBLG,MBRY,MBBY --hpfilt $freqHP "$@"
 getnPlot -q --pre 5 --dur 30 --kind tfr --sta MSS1 --fmin 1.0 --fmax 50.0 --hpfilt $freqHP "$@"
 getnPlot -q --pre 5 --dur 30 --kind tfr --sta MBFR --fmin 1.0 --fmax 50.0 --hpfilt $freqHP "$@"
 getnPlot -q --pre 5 --dur 30 --kind tfr --sta MBLG --fmin 1.0 --fmax 50.0 --hpfilt $freqHP "$@"
 getnPlot -q --pre 5 --dur 30 --kind tfr --sta MBLY --fmin 1.0 --fmax 50.0 --hpfilt $freqHP "$@"
+getnPlot -q --pre 5 --dur 30 --kind tfr --sta MBRY --fmin 1.0 --fmax 50.0 --hpfilt $freqHP "$@"
+getnPlot -q --pre 5 --dur 30 --kind tfr --sta MBBY --fmin 1.0 --fmax 50.0 --hpfilt $freqHP "$@"
 
 conda deactivate >/dev/null 2>&1
 
-magick mogrify -crop 1654x1113+86+117 *tfr*.png
-magick mogrify -resize 574x432! *tfr*.png
-magick montage *MSS1-Z-tfr*.png *MBFR-Z-tfr*.png *MBLY-Z-tfr*.png *MBLG-Z-tfr*.png -tile 1x4 -geometry +1+1 tmp.png
+magick mogrify -crop 1181x829+560+85 *tfr*.png
+magick mogrify -resize 454x320! *tfr*.png
+magick montage *MSS1-Z-tfr*.png *MBFR-Z-tfr*.png *MBLY-Z-tfr*.png *MBLG-Z-tfr*.png *MBRY-Z-tfr*.png *MBBY-Z-tfr*.png -tile 1x6 -geometry +1+1 tmp.png
 #rm *tfr*.png
 files=(*)
 fname=$files
