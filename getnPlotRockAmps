@@ -1,0 +1,16 @@
+#!/usr/bin/bash
+# 
+# Runs getnPlot.py under proper conda environment for rockfalls to get amplitudes
+# (assumes time is first pick time)
+
+eval "$(conda shell.bash hook)"
+
+if [ "$HOSTNAME" = "opsproc2" ]; then
+    conda activate >/dev/null 2>&1
+else
+    conda activate obspy >/dev/null 2>&1
+fi
+
+getnPlot --tag Rockfall --kind Z --sta MBFR,MBLY,MBLG --hpfilt 1.0 --pre 0 "$@"
+
+conda deactivate >/dev/null 2>&1
