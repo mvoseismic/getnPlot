@@ -39,17 +39,14 @@ getnPlot
 ## Options
 
 ```
-  -h, --help        show help message and exit
+  -h, --help        show this help message and exit
   -v, --version     show program's version number and exit
   --mode            Mode of operation: getnplot | get | plot | test (default: getnplot)
   -q, --quiet       No screen output (default: False)
-  --source          Data source: auto | wws | mseed | cont | event | filename (default: auto)
-                    	auto tries wws then mseed then cont
+  --source          Data source (auto tries wws then mseed then cont): auto | wws | mseed | cont | event | filename (default: auto)
   --wwsip           Hostname or IP address of winston wave server (default: 172.17.102.60)
   --wwsport         Port of winston wave server (default: 16022)
   -k , --kind       Kind of plot (use all for get only): allZ | all3C | closeZ | close3C | radianZ | radian3C | Z | specialZ | spectrumZ | 3C | special3C | irishZ | irish3C | lahar | tfr | forAI | rockfall | partmot | all | allplusZ | strain | strainplus | infra | heli | longsgram | stringthing (default: allZ)
-                    	allZ: all MVO vertical seismic stations
-                    	allplusZ: all vertical seismic stations, including CALIPSO
   --sta             Station(s) to be plotted, comma separated) (not used in some kinds of plot). (default: MSS1)
   -d , --date       Date of event (UTC): today | yesterday | yyyy-mm-dd | yyyy.jjj (default: today)
   -t , --time       Time of event (UTC): hh:mm | hh:mm:ss | hh:mm:ss.s | now |now-X | now-Xs | now-Xm (default: now)
@@ -69,7 +66,6 @@ getnPlot
   --show            Show plot on screen as well as saving it (default: False)
   --grid            Add time-axis grid to seismograms (default: False)
   --title           Title for plot, defaults gives all information. Special arguments: sta, datetime, date, time, tag (default: None)
-                    	Underscores in string are replaced by spaces in title.
   --bigtitle        Big bold title. (default: False)
   --nogreen         Do not plot green line for arrival/event time. (default: False)
   --linewidth       Thickness of plotted line (default: 0.5)
@@ -83,6 +79,7 @@ getnPlot
   --abs             Use absolute value of data (default: False)
   --sqrt            Use square-root value of data (default: False)
   --log             Use logarithinc value of data (default: False)
+  --env             Use signal envelope (default: False)
   --dir             Directory name for plots and files (default: .)
   --tag             String (no spaces) used in output file names (default: )
   --plotfile        Plot file name, no extension, default is based on arguments (default: )
@@ -94,10 +91,6 @@ getnPlot
   --noscnl          Remove scnl label in panel (default: False)
   --heliwidth       Width (minutes) of helicorder plot (default: 15.0)
   --heliscale       Scaling of helicorder plot (default: 0.0)
-                    	0: auto-scaling
-                    	1: pre-set scaling
-                    	>1: larger
-                    	<1: smaller
   --printdatarange  Print out range of data for each channel (default: False)
 ```
 
@@ -112,6 +105,7 @@ getnPlot
 | *getnPlotIrish* | Runs *getnPlot* several times, suitable for events near Irish Ghaut. |
 | *getnPlotRemote* | Runs *getnPlot* on *opsproc2*. 
 | *getnPlotRock* | Runs getnPlot several times, suitable for rockfalls. |
+| *getnPlotRockAmps* | Runs getnPlot for rockfalls to get envelope amplitudes. |
 | *getnPlotSpecial* | Creates composite plot useful for comparing events.|
 | *getnPlotSpecial2* | Like *getnPlotSpecial* but without the bottom panel.|
 | *getnPlotSpecial3* | Creates thin composite plot that can be montaged with *getnPlotSpecial3Montage*.|
