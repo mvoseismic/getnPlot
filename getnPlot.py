@@ -948,6 +948,8 @@ if dataIntegrate:
 if dataDownsample > 1:
     st2.decimate(factor=dataDownsample, strict_length=False)
 st2.detrend('demean')
+if dataVec:
+    st2 = rodsPythonThings.streamFiddle3C( st2, 'vec' )
 if dataAbs:
     st2 = rodsPythonThings.streamFiddle( st2, 'abs' )
 if dataSqrt:
@@ -956,8 +958,6 @@ if dataLog:
     st2 = rodsPythonThings.streamFiddle( st2, 'log' )
 if dataEnv:
     st2 = rodsPythonThings.streamFiddle( st2, 'env' )
-if dataVec:
-    st2 = rodsPythonThings.streamFiddle3C( st2, 'vec' )
 
 
 
