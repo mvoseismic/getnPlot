@@ -80,6 +80,7 @@ getnPlot
   --sqrt            Use square-root value of data (default: False)
   --log             Use logarithinc value of data (default: False)
   --env             Use signal envelope (default: False)
+  --vec             Replaces 3C sets with vector sum (default: False)
   --dir             Directory name for plots and files (default: .)
   --tag             String (no spaces) used in output file names (default: )
   --plotfile        Plot file name, no extension, default is based on arguments (default: )
