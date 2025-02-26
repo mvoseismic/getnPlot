@@ -957,7 +957,7 @@ if dataLog:
 if dataEnv:
     st2 = rodsPythonThings.streamFiddle( st2, 'env' )
 if dataVec:
-    st2 = rodsPythonThings.streamFiddle( st2, 'vec' )
+    st2 = rodsPythonThings.streamFiddle3C( st2, 'vec' )
 
 
 
