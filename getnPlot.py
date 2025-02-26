@@ -119,6 +119,7 @@ parser.add_argument('--datimtag', default=4, help='Number of characters in time 
 
 parser.add_argument('--downsample', type=int, default=1, help='Downsampling factor', metavar='')
 parser.add_argument('--saverms', action='store_true', help='Save RMS of signals in a text file')
+parser.add_argument('--savemax', action='store_true', help='Save max of signals in a text file')
 parser.add_argument('--nochaff', action='store_true', help='Remove all labelling, titles')
 parser.add_argument('--noscnl', action='store_true', help='Remove scnl label in panel')
 parser.add_argument('--heliwidth', type=float, default=15.0, help='Width (minutes) of helicorder plot', metavar='')
@@ -223,6 +224,7 @@ plotLineWidth= args.linewidth
 filenameDatimN = float( args.datimtag )
 dataDownsample = args.downsample
 saveRMS = args.saverms
+saveMax = args.savemax
 plotNochaff = args.nochaff
 plotNoscnl = args.noscnl
 plotHeliWidth= args.heliwidth
@@ -657,6 +659,7 @@ if not runQuiet:
     print(' RMS in lahar:       ' + str(plotRms))
     print(' Show plot:          ' + str(plotShow))
     print(' Save RMS:           ' + str(saveRMS))
+    print(' Save max:           ' + str(saveMax))
 
 
 ############  Exit when testing
@@ -989,6 +992,18 @@ if saveRMS:
         dataRMS = np.sqrt( np.mean( np.square( tr.detrend("demean") ) ) )
         fileRMS.write( ' '.join([ evDatim.strftime("%Y-%m-%d %H:%M:%S.%f")[:-5], tr.stats.station, tr.stats.channel, str(dataRMS), "\n"]) )
     fileRMS.close()
+
+
+############  Save maximum of each channel in text file
+if saveMax:
+    fileMax = ''.join([ datimEventString, '--max.txt' ])
+    fileMax = open(fileMax, "w")
+    nTrace = len(st2)
+    for itr in range(nTrace):
+        tr = st2[itr]
+        dataMax = max( tr.data )
+        fileMax.write( ' '.join([ evDatim.strftime("%Y-%m-%d %H:%M:%S.%f")[:-5], tr.stats.station, tr.stats.channel, str(dataMax), "\n"]) )
+    fileMax.close()
 
 
 ############  Plot signal normalization

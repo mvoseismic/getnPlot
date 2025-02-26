@@ -88,6 +88,7 @@ getnPlot
   --datimtag        Number of characters in time bit of datim tag (default: 4)
   --downsample      Downsampling factor (default: 1)
   --saverms         Save RMS of signals in a text file (default: False)
+  --savemax         Save max of signals in a text file (default: False)
   --nochaff         Remove all labelling, titles (default: False)
   --noscnl          Remove scnl label in panel (default: False)
   --heliwidth       Width (minutes) of helicorder plot (default: 15.0)
