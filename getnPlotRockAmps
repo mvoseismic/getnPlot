@@ -11,6 +11,6 @@ else
     conda activate obspy >/dev/null 2>&1
 fi
 
-getnPlot --tag Rockfall --kind 3C --sta MBFR,MBLY,MBLG --hpfilt 1.0 --pre 0 --vec --env --savemax "$@"
+getnPlot --tag Rockfall --kind 3C --sta MBFR,MBLY,MBLG,MBRY,MBBY --hpfilt 1.0 --lpfilt 10.0 --pre 0 --vec --env --savemax "$@"
 
 conda deactivate >/dev/null 2>&1
