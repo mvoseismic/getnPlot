@@ -984,7 +984,7 @@ if runMode== "get":
 
 ############  Save RMS of each channel in text file
 if saveRMS:
-    fileRMS = ''.join([ datimEventString, '--rms.txt' ])
+    fileRMS = ''.join([ datimEventString, '--', filenameTag, '-rms.txt' ])
     fileRMS = open(fileRMS, "w")
     nTrace = len(st2)
     for itr in range(nTrace):
@@ -996,7 +996,7 @@ if saveRMS:
 
 ############  Save maximum of each channel in text file
 if saveMax:
-    fileMax = ''.join([ datimEventString, '--max.txt' ])
+    fileMax = ''.join([ datimEventString, '--', filenameTag, '-max.txt' ])
     fileMax = open(fileMax, "w")
     nTrace = len(st2)
     for itr in range(nTrace):
