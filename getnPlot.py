@@ -661,6 +661,8 @@ if not runQuiet:
     print(' Save RMS:           ' + str(saveRMS))
     print(' Save max:           ' + str(saveMax))
 
+    print(' ')
+
 
 ############  Exit when testing
 if runMode == 'test':
