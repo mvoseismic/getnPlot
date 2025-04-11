@@ -22,6 +22,7 @@ REVIEW tests
 why did testPlots stop after 15?
 
 ADD
+default pre 1/6 of dur
 add number of poles for filter
 change to only fetching data required
 add xxxxxlong

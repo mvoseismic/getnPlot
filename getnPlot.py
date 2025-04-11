@@ -72,6 +72,7 @@ parser.add_argument('--sta', default='MSS1', help='Station(s) to be plotted, com
 parser.add_argument('-d', '--date', default='today', help='Date of event (UTC): today | yesterday | yyyy-mm-dd | yyyy.jjj', metavar='')
 parser.add_argument('-t', '--time', default='now', help='Time of event (UTC): hh:mm | hh:mm:ss | hh:mm:ss.s | now |now-X | now-Xs | now-Xm', metavar='')
 parser.add_argument('--yesterday', action='store_true', help='Set date to yesterday')
+parser.add_argument('--yday', action='store_true', help='Set date to yesterday')
 parser.add_argument('--today', action='store_true', help='Set date to today')
 
 parser.add_argument('-p', '--pre', default='10', help='Window starts this many seconds before event time, append m or h to input minutes or hours', metavar='')
@@ -217,6 +218,7 @@ filePlot = args.plotfile
 fileMseedOut = args.datafile
 setToday = args.today
 setYesterday = args.yesterday
+setYday = args.yday
 plotTitleArg = args.title
 plotTitleBig = args.bigtitle
 plotNogreen = args.nogreen
@@ -268,7 +270,7 @@ if runMode == 'plot' and dataSource == '':
 
 
 ############  Sort out dates and times
-if eventDate == 'yesterday' or setYesterday:
+if eventDate == 'yesterday' or eventDate == 'yday' or setYesterday:
     evDate = UTCDateTime(today.year, today.month, today.day) - secInDay
 elif eventDate == 'today' or setToday:
     evDate = UTCDateTime(today.year, today.month, today.day)

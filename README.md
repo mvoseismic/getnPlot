@@ -51,6 +51,7 @@ getnPlot
   -d , --date       Date of event (UTC): today | yesterday | yyyy-mm-dd | yyyy.jjj (default: today)
   -t , --time       Time of event (UTC): hh:mm | hh:mm:ss | hh:mm:ss.s | now |now-X | now-Xs | now-Xm (default: now)
   --yesterday       Set date to yesterday (default: False)
+  --yday       Set date to yesterday (default: False)
   --today           Set date to today (default: False)
   -p , --pre        Window starts this many seconds before event time, append m or h to input minutes or hours (default: 10)
   -l , --dur        Window duration, in seconds: append m or h to input minutes or hours (default: 60)
