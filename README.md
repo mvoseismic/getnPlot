@@ -121,7 +121,7 @@ getnPlot
 | *getnPlotWav* | |
 | *getWaves.py* |  |
 | *panPlots.py* | Standalone script to generate "panacea" plots. Testbed for *--kind pan* option.|
-| *select2getnp.pl* | |
+| *select2getnp.pl* | Creates *doIt.sh* with getnPlot commands for each event in a files created by *select*. Usage: *select2getnp.pl select.out*.|
 | *vtst2getnp.pl* | |
 
 ## Examples

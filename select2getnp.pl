@@ -113,6 +113,8 @@ while (my $line = readline($fhi)) {
         } elsif( $evType eq 'D' ){
             $evTag = 'Distant';
         }
+        # HACK TO USE MSEED FILES INSTEAD OF SEISAN FILE
+        $evFile = "mseed";
         if( $cmdOpts =~ /tag/ ) {
             $cmd = join( ' ', $cmdStub, $cmdOpts, '--date', $evDate, '--time', $evTime, '--source', $evFile );
         } else {
