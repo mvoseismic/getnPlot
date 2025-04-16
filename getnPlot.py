@@ -1179,7 +1179,8 @@ if plotNochaff:
 if plotSomechaff:
     theseAxes = thisFig.get_axes()
     for thisAxes in theseAxes:
-        thisAxes.set_xticklabels([])
+        thisAxes.set_yticklabels([])
+        thisAxes.set_title('')
 
 
 
