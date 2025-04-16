@@ -91,6 +91,7 @@ getnPlot
   --saverms         Save RMS of signals in a text file (default: False)
   --savemax         Save max of signals in a text file (default: False)
   --nochaff         Remove all labelling, titles (default: False)
+  --somechaff       Remove some labelling, titles (default: False)
   --noscnl          Remove scnl label in panel (default: False)
   --heliwidth       Width (minutes) of helicorder plot (default: 15.0)
   --heliscale       Scaling of helicorder plot (default: 0.0)
