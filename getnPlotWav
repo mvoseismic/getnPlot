@@ -12,8 +12,8 @@ my $numArgs = $#ARGV + 1;
 
 if( $numArgs < 1 ){ 
     print "Not enough arguments", "\n";
-    print "usage: findWav yyyy-mm-dd hh:mm:ss <minutes>", "\n";
-    print "usage: findWav input.txt", "\n";
+    print "usage: getnPlotWav yyyy-mm-dd hh:mm:ss <minutes>", "\n";
+    print "usage: getnPlotWav input.txt", "\n";
 } else {
 
     print "Additional getnPlot arguments: ";
