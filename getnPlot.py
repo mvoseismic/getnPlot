@@ -66,7 +66,7 @@ parser.add_argument('--wwsip', default='172.17.102.60', help='Hostname or IP add
 parser.add_argument('--wwsport', default=16022, help='Port of winston wave server', metavar='')
 
 choices=['allZ','all3C','closeZ','close3C','radianZ','radian3C','Z','specialZ', 'spectrumZ', '3C','special3C','irishZ','irish3C','lahar','tfr','forAI', 'rockfall', 'partmot', 'all', 'allplusZ', 'strain', 'strainplus', 'infra', 'heli', 'longsgram', 'stringthing' ]
-parser.add_argument('-k', '--kind', default='allZ', choices=choices, help='Kind of plot (use all for get only): '+' | '.join(choices), metavar='')
+parser.add_argument('-k', '--kind', default='allZ', choices=choices, help='Kind of plot (case-insensitive): '+' | '.join(choices), metavar='')
 parser.add_argument('--sta', default='MSS1', help='Station(s) to be plotted, comma separated) (not used in some kinds of plot).', metavar='')
 
 parser.add_argument('-d', '--date', default='today', help='Date of event (UTC): today | yesterday | yyyy-mm-dd | yyyy.jjj', metavar='')
