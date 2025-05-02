@@ -111,6 +111,7 @@ parser.add_argument('--sqrt', action='store_true', help='Use square-root value o
 parser.add_argument('--log', action='store_true', help='Use logarithinc value of data')
 parser.add_argument('--env', action='store_true', help='Use signal envelope')
 parser.add_argument('--vec', action='store_true', help='Replaces 3C sets with vector sum' );
+parser.add_argument('--taper', action='store_true', help='10% cosine taper at each end of data' );
 
 parser.add_argument('--dir', default='.', help='Directory name for plots and files', metavar='')
 parser.add_argument('--tag', default='', help='String (no spaces) used in output file names', metavar='')
@@ -213,6 +214,7 @@ dataSqrt= args.sqrt
 dataLog = args.log
 dataEnv = args.env
 dataVec = args.vec
+dataTaper = args.taper
 outDir = args.dir
 filenameTag = args.tag
 filePlot = args.plotfile
@@ -651,6 +653,7 @@ if not runQuiet:
     print(' Plot log(data):     ' + str(dataLog))
     print(' Plot data envelope: ' + str(dataEnv))
     print(' Plot 3C vector:     ' + str(dataVec))
+    print(' Taper data:         ' + str(dataTaper))
     print(' Downsampling:       ' + str(dataDownsample))
     print(' Print data range:   ' + str(printDataRange))
 
@@ -968,6 +971,8 @@ if dataLog:
     st2 = rodsPythonThings.streamFiddle( st2, 'log' )
 if dataEnv:
     st2 = rodsPythonThings.streamFiddle( st2, 'env' )
+if dataTaper:
+    st2 = rodsPythonThings.streamFiddle( st2, 'taper' )
 
 
 
