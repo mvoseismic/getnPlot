@@ -116,6 +116,7 @@ getnPlot
 | *getnPlotSpecial3* | Creates thin composite plot that can be montaged with *getnPlotSpecial3Montage*.|
 | *getnPlotSpecial3a* | Like *getnPlotSpecial3* but with fewer stations.|
 | *getnPlotSpecial3long* | Like *getnPlotSpecial3* but with more data.|
+| *getnPlotSpecial4* | Creates a special plot with emphasis on one station. Usage *getnplotSpecial4 STA --otherargs*.|
 | *getnPlotVT* | Runs *getnPlot* several times, suitable for VTs. |
 | *getnPlotTiledTfr* | Runs *getnPlot* to get a tiled plot of TFR from the six closest stations. |
 | *getnPlotWav* | ***I can't remember if this works or is obselete.***|
