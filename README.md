@@ -149,6 +149,7 @@ stringthing
 | *getnPlotSpecial3a* | Like *getnPlotSpecial3* but with fewer stations.|
 | *getnPlotSpecial3long* | Like *getnPlotSpecial3* but with more data.|
 | *getnPlotSpecial4* | Creates a special plot with emphasis on one station. Usage *getnplotSpecial4 STA --otherargs*.|
+| *getnPlotTfrAll* | Creates a montage of 12 TFR plots for all vertical components.|
 | *getnPlotVT* | Runs *getnPlot* several times, suitable for VTs. |
 | *getnPlotTiledTfr* | Runs *getnPlot* to get a tiled plot of TFR from the six closest stations. |
 | *getnPlotWav* | ***I can't remember if this works or is obselete.***|

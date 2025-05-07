@@ -32,7 +32,17 @@ conda deactivate >/dev/null 2>&1
 
 magick montage *.png -tile 4x3 -geometry +0+0 tmp.png
 
-mv tmp.png  ..
+rm *tfr*.png
+
+getnPlot -q "$@"
+
+files=(*)
+fname=$files
+fname2=${fname//allz/allz-tfr}
+
+mv tmp.png "${fname2}"
+
+mv "${fname2}" ..
 
 cd ..
 rm -r tmpGetNPlot
