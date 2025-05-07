@@ -1,0 +1,38 @@
+#!/usr/bin/bash
+# 
+# Runs getnPlot.py under proper conda environment to get 12 tfrs
+
+eval "$(conda shell.bash hook)"
+
+if [ "$HOSTNAME" = "opsproc2" ]; then
+    conda activate >/dev/null 2>&1
+else
+    conda activate obspy >/dev/null 2>&1
+fi
+
+
+mkdir -p tmpGetNPlot
+cd tmpGetNPlot
+rm -f *.*
+
+getnPlot -q --kind tfr --sta MSS1 "$@" 
+getnPlot -q --kind tfr --sta MBFR "$@" 
+getnPlot -q --kind tfr --sta MBLY "$@" 
+getnPlot -q --kind tfr --sta MBLG "$@" 
+getnPlot -q --kind tfr --sta MBRY "$@" 
+getnPlot -q --kind tfr --sta MBBY "$@" 
+getnPlot -q --kind tfr --sta MBHA "$@" 
+getnPlot -q --kind tfr --sta MBGH "$@" 
+getnPlot -q --kind tfr --sta MBWH "$@" 
+getnPlot -q --kind tfr --sta MBFL "$@" 
+getnPlot -q --kind tfr --sta MBGB "$@" 
+getnPlot -q --kind tfr --sta MBRV "$@" 
+
+conda deactivate >/dev/null 2>&1
+
+magick montage *.png -tile 4x3 -geometry +0+0 tmp.png
+
+mv tmp.png  ..
+
+cd ..
+rm -r tmpGetNPlot

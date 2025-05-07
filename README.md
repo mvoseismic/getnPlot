@@ -98,6 +98,38 @@ getnPlot
   --printdatarange  Print out range of data for each channel (default: False)
 ```
 
+## --kind Options
+
+```
+allZ			All core Z channels (12).
+all3C			All core 3C channels (11).
+closeZ			Z channels from close stations (MSS1,MBFR,MBLY,MBLG,MBRY).
+close3C			3C channels from lose stations (MSS1,MBFR,MBLY,MBLG,MBRY).
+radianZ			Z channels from Radian stations (MBFR,MBLY,MBLG,MBBY,MBGH,MBFK,MBWH,MBGB).
+radian3C		3C channels from Radian stations (MBFR,MBLY,MBLG,MBBY,MBGH,MBFK,MBWH,MBGB).
+Z			Z channels
+specialZ
+spectrumZ
+3C			3C channels
+special3C
+irishZ			Z channels for Irish Ghaut rockfalls (MBLG,MBHA,MSS1,MBLY,MBRY).
+irish3C			3C channels for Irish Ghaut rockfalls (MBLG,MBHA,MSS1).
+lahar
+tfr
+forAI
+rockfall
+partmot
+all			All core 3C channels plus MSS1.
+allplusZ		All core Z channels plus TRNT and OLV1.
+strain			Strain data from OLV1, TRNT.
+strainplus		Strain data from AIRS, OLV1, TRNT.
+infra
+heli
+longsgram
+stringthing
+```
+
+
 ## Scripts (as of 2025-04-30)
 
 ### Scripts which take same arguments as *getnPlot*
