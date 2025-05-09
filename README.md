@@ -39,7 +39,7 @@ getnPlot
 ## Options
 
 ```
-  -h, --help        show this help message and exit
+   -h, --help        show this help message and exit
   -v, --version     show program's version number and exit
   --mode            Mode of operation: getnplot | get | plot | test (default: getnplot)
   -q, --quiet       No screen output (default: False)
@@ -51,7 +51,7 @@ getnPlot
   -d , --date       Date of event (UTC): today | yesterday | yyyy-mm-dd | yyyy.jjj (default: today)
   -t , --time       Time of event (UTC): hh:mm | hh:mm:ss | hh:mm:ss.s | now |now-X | now-Xs | now-Xm (default: now)
   --yesterday       Set date to yesterday (default: False)
-  --yday       Set date to yesterday (default: False)
+  --yday            Set date to yesterday (default: False)
   --today           Set date to today (default: False)
   -p , --pre        Window starts this many seconds before event time, append m or h to input minutes or hours (default: 10)
   -l , --dur        Window duration, in seconds: append m or h to input minutes or hours (default: 60)
@@ -82,6 +82,7 @@ getnPlot
   --log             Use logarithinc value of data (default: False)
   --env             Use signal envelope (default: False)
   --vec             Replaces 3C sets with vector sum (default: False)
+  --taper           10 percent cosine taper at each end of data (default: False)
   --dir             Directory name for plots and files (default: .)
   --tag             String (no spaces) used in output file names (default: )
   --plotfile        Plot file name, no extension, default is based on arguments (default: )
@@ -90,12 +91,11 @@ getnPlot
   --downsample      Downsampling factor (default: 1)
   --saverms         Save RMS of signals in a text file (default: False)
   --savemax         Save max of signals in a text file (default: False)
-  --nochaff         Remove all labelling, titles (default: False)
-  --somechaff       Remove some labelling, titles (default: False)
-  --noscnl          Remove scnl label in panel (default: False)
+  --chaff           Labels, titles, etc: none | some | noscnl | title | scnltitle | all (default: all)
   --heliwidth       Width (minutes) of helicorder plot (default: 15.0)
   --heliscale       Scaling of helicorder plot (default: 0.0)
   --printdatarange  Print out range of data for each channel (default: False)
+
 ```
 
 ## --kind Options

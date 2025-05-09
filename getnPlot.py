@@ -122,9 +122,8 @@ parser.add_argument('--datimtag', default=4, help='Number of characters in time 
 parser.add_argument('--downsample', type=int, default=1, help='Downsampling factor', metavar='')
 parser.add_argument('--saverms', action='store_true', help='Save RMS of signals in a text file')
 parser.add_argument('--savemax', action='store_true', help='Save max of signals in a text file')
-parser.add_argument('--nochaff', action='store_true', help='Remove all labelling, titles')
-parser.add_argument('--somechaff', action='store_true', help='Remove some labelling, titles')
-parser.add_argument('--noscnl', action='store_true', help='Remove scnl label in panel')
+choices=['none','some','noscnl', 'title', 'scnltitle', 'all']
+parser.add_argument('--chaff', default='all', choices=choices, help='Labels, titles, etc: '+' | '.join(choices), metavar='')
 parser.add_argument('--heliwidth', type=float, default=15.0, help='Width (minutes) of helicorder plot', metavar='')
 parser.add_argument('--heliscale', type=float, default=0.0, help='Scaling of helicorder plot', metavar='')
 parser.add_argument('--printdatarange', action='store_true', help='Print out range of data for each channel')
@@ -230,9 +229,7 @@ filenameDatimN = float( args.datimtag )
 dataDownsample = args.downsample
 saveRMS = args.saverms
 saveMax = args.savemax
-plotNochaff = args.nochaff
-plotSomechaff = args.somechaff
-plotNoscnl = args.noscnl
+plotChaff = args.chaff
 plotHeliWidth= args.heliwidth
 plotHeliScale= args.heliscale
 printDataRange=args.printdatarange
@@ -635,9 +632,7 @@ if not runQuiet:
     print(' Plot grid:          ' + str(plotGrid))
     print(' Plot line width:    ' + str(plotLineWidth))
     print(' No green line:      ' + str(plotNogreen))
-    print(' No text in plot:    ' + str(plotNochaff))
-    print(' Some text in plot:  ' + str(plotSomechaff))
-    print(' No SCNL in plot:    ' + str(plotNoscnl))
+    print(' Plot annotation:    ' + plotChaff)
     print(' Heli width (m):     ' + str(plotHeliWidth))
     print(' Heli scaling:       ' + str(plotHeliScale))
 
@@ -1170,29 +1165,25 @@ elif plotFuncs == 'rods' and plotKind == 'stringthing':
 
 
 
-############  Remove text titles and labels
-if plotNochaff:
-    theseAxes = thisFig.get_axes()
-    for thisAxes in theseAxes:
+############  Plot annotation
+theseAxes = thisFig.get_axes()
+for thisAxes in theseAxes:
+    if plotChaff == 'none':
         thisAxes.set_yticklabels([])
         thisAxes.set_xticklabels([])
         thisAxes.set_title('')
-
-
-
-############  Remove some text titles and labels
-if plotSomechaff:
-    theseAxes = thisFig.get_axes()
-    for thisAxes in theseAxes:
-        thisAxes.set_yticklabels([])
-
-
-
-############  Remove SCNL label in panels
-if plotNoscnl:
-    theseAxes = thisFig.get_axes()
-    for thisAxes in theseAxes:
         thisAxes.texts[0].remove()
+    elif plotChaff == 'some':
+        thisAxes.set_yticklabels([])
+    elif plotChaff == 'noscnl':
+        thisAxes.texts[0].remove()
+    elif plotChaff == 'title':
+        thisAxes.set_yticklabels([])
+        thisAxes.set_xticklabels([])
+        thisAxes.texts[0].remove()
+    elif plotChaff == 'scnltitle':
+        thisAxes.set_yticklabels([])
+        thisAxes.set_xticklabels([])
 
 
 
