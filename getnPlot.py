@@ -457,6 +457,7 @@ elif plotKind == "infra":
 elif plotKind == "infraplus":
     stas = dataStation.split(",")
     chas = "hz"
+    dataNormalize = "no"
 elif plotKind == "allplusz":
     stas = ["MSS1", "MBFR", "MBLY", "MBLG", "MBRY", "MBBY",
             "MBHA", "MBGH", "MBWH", "MBFL", "MBGB", "TRNT", "OLV1", "MBRV"]
