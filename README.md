@@ -46,7 +46,8 @@ getnPlot
   --source          Data source (auto tries wws then mseed then cont): auto | wws | mseed | cont | event | filename (default: auto)
   --wwsip           Hostname or IP address of winston wave server (default: 172.17.102.60)
   --wwsport         Port of winston wave server (default: 16022)
-  -k , --kind       Kind of plot (case-insensitive): allZ | all3C | closeZ | close3C | radianZ | radian3C | Z | specialZ | spectrumZ | 3C | special3C | irishZ | irish3C | lahar | tfr | forAI | rockfall | partmot | all | allplusZ | strain | strainplus | infra | heli | longsgram | stringthing (default: allZ)
+  -k , --kind       Kind of plot (case-insensitive): allZ | all3C | closeZ | close3C | radianZ | radian3C | Z | specialZ | spectrumZ | 3C | special3C | irishZ | irish3C | lahar | tfr | forAI | rockfall | partmot | all | allplusZ | strain | strainplus | infra | infraplus | heli | longsgram | stringthing (default:
+                    allZ)
   --sta             Station(s) to be plotted, comma separated) (not used in some kinds of plot). (default: MSS1)
   -d , --date       Date of event (UTC): today | yesterday | yyyy-mm-dd | yyyy.jjj (default: today)
   -t , --time       Time of event (UTC): hh:mm | hh:mm:ss | hh:mm:ss.s | now |now-X | now-Xs | now-Xm (default: now)
@@ -123,8 +124,9 @@ all			All core 3C channels plus MSS1.
 allplusZ		All core Z channels plus TRNT and OLV1.
 strain			Strain data from OLV1, TRNT.
 strainplus		Strain data from AIRS, OLV1, TRNT.
-infra
-heli
+infra			All HDF channels
+infraplus		MBFL HDF with seismic channels specified by --sta.
+heli				
 longsgram
 stringthing
 ```

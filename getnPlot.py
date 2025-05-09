@@ -65,7 +65,7 @@ parser.add_argument('--source', default='auto', help='Data source (auto tries ww
 parser.add_argument('--wwsip', default='172.17.102.60', help='Hostname or IP address of winston wave server', metavar='')
 parser.add_argument('--wwsport', default=16022, help='Port of winston wave server', metavar='')
 
-choices=['allZ','all3C','closeZ','close3C','radianZ','radian3C','Z','specialZ', 'spectrumZ', '3C','special3C','irishZ','irish3C','lahar','tfr','forAI', 'rockfall', 'partmot', 'all', 'allplusZ', 'strain', 'strainplus', 'infra', 'heli', 'longsgram', 'stringthing' ]
+choices=['allZ','all3C','closeZ','close3C','radianZ','radian3C','Z','specialZ', 'spectrumZ', '3C','special3C','irishZ','irish3C','lahar','tfr','forAI', 'rockfall', 'partmot', 'all', 'allplusZ', 'strain', 'strainplus', 'infra', 'infraplus', 'heli', 'longsgram', 'stringthing' ]
 parser.add_argument('-k', '--kind', default='allZ', choices=choices, help='Kind of plot (case-insensitive): '+' | '.join(choices), metavar='')
 parser.add_argument('--sta', default='MSS1', help='Station(s) to be plotted, comma separated) (not used in some kinds of plot).', metavar='')
 
@@ -454,6 +454,9 @@ elif plotKind == "strainplus":
 elif plotKind == "infra":
     stas =["MBFL"] 
     chas = "h"
+elif plotKind == "infraplus":
+    stas = dataStation.split(",")
+    chas = "hz"
 elif plotKind == "allplusz":
     stas = ["MSS1", "MBFR", "MBLY", "MBLG", "MBRY", "MBBY",
             "MBHA", "MBGH", "MBWH", "MBFL", "MBGB", "TRNT", "OLV1", "MBRV"]
@@ -838,6 +841,36 @@ elif chas == "h":
         netf = f'{icha:02d}'
         tr.stats.network = netf
         st2 += tr
+elif chas == "hz":
+    # Loop round wanted stations
+    for sta in stas:
+        icha += 1
+        # Get wanted channels
+        try:
+            stt = stWant.select(station=sta, component='z')
+            tr = stt[0]
+        except:
+            tr = Trace(data=np.zeros(2))
+            tr.stats.npts = 2
+            tr.stats.starttime = datimBeg
+            tr.stats.station = sta
+            tr.stats.sampling_rate = 100.0
+        netf = f'{icha:02d}'
+        tr.stats.network = netf
+        st2 += tr
+        if sta == 'MBFL':
+            try:
+                stt = stWant.select(station=sta, channel='HDF')
+                tr = stt[0]
+            except:
+                tr = Trace(data=np.zeros(2))
+                tr.stats.npts = 2
+                tr.stats.starttime = datimBeg
+                tr.stats.station = sta
+                tr.stats.sampling_rate = 100.0
+            netf = f'{icha:02d}'
+            tr.stats.network = netf
+            st2 += tr
 elif chas == "3c":
     # Loop round wanted stations
     for sta in stas:
