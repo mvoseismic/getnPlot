@@ -11,7 +11,7 @@ if( scalar @ARGV == 0 ) {
 }
 
 my $inputFile= $ARGV[0];
-my $outputFile="doit.sh";
+my $outputFile="doIt";
 
 open my $fho, '>', $outputFile or die $!;
 open my $fhi, '<', $inputFile or die $!;
@@ -19,7 +19,7 @@ open my $fhi, '<', $inputFile or die $!;
 my @chunks = split /\//, $inputFile;
 
 
-my ($tag) = $chunks[-1] =~ m/\-\-(.*)\.txt$/; 
+my $tag = $chunks[-1] =~ m/\-\-(.*)\.txt$/; 
 
 my $bash = `which bash`;
 chomp $bash;
@@ -42,4 +42,4 @@ close($fhi);
 close($fho);
 
 
-system( 'chmod +x doit.sh' );
+system( 'chmod +x doIt' );
