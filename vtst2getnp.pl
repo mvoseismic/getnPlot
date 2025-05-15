@@ -16,11 +16,6 @@ my $outputFile="doIt";
 open my $fho, '>', $outputFile or die $!;
 open my $fhi, '<', $inputFile or die $!;
 
-my @chunks = split /\//, $inputFile;
-
-
-my $tag = $chunks[-1] =~ m/\-\-(.*)\.txt$/; 
-
 my $bash = `which bash`;
 chomp $bash;
 print $fho "#!$bash\n";
@@ -33,8 +28,8 @@ while (my $line = readline($fhi)) {
     my $dateEvent = join( '-', $chunks[0], $chunks[1], $chunks[2] );
     my $timeEvent = join( ':', $chunks[3], $chunks[4], $chunks[5] );
 
-    print $fho "getnPlot --tag $tag --date $dateEvent --time $timeEvent\n";
-    print $fho "getnPlot --kind tfr --pre 5 --dur 35 --tag $tag --date $dateEvent --time $timeEvent\n";
+    print $fho "getnPlot --date $dateEvent --time $timeEvent\n";
+    print $fho "getnPlot --kind tfr --pre 5 --dur 35 --date $dateEvent --time $timeEvent\n";
 
 }
 
