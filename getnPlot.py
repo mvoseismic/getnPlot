@@ -372,6 +372,7 @@ nslcWant = {
     'MV.MBRV..BHE', 'MV.MBRV..BHN', 'MV.MBRV..BHZ',
 #    'MV.MBRV..SHZ',
     'MV.MBRY..BHE', 'MV.MBRY..BHN', 'MV.MBRY..BHZ',
+    'MV.MBWH.00.HH1', 'MV.MBWH.00.HH2', 'MV.MBWH.00.HHZ',
     'MV.MBWH..BHE', 'MV.MBWH..BHN', 'MV.MBWH..BHZ',
 #    'MV.MBWH..SHZ',
     'MV.MRYT..SHZ',
