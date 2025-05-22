@@ -71,6 +71,7 @@ parser.add_argument('--sta', default='MSS1', help='Station(s) to be plotted, com
 
 parser.add_argument('-d', '--date', default='today', help='Date of event (UTC): today | yesterday | yyyy-mm-dd | yyyy.jjj', metavar='')
 parser.add_argument('-t', '--time', default='now', help='Time of event (UTC): hh:mm | hh:mm:ss | hh:mm:ss.s | now |now-X | now-Xs | now-Xm', metavar='')
+parser.add_argument('--datim', help='Date and time of event (UTC): yyyymmdd-hhmm | yyyymmdd-hhmmss', metavar='')
 parser.add_argument('--yesterday', action='store_true', help='Set date to yesterday')
 parser.add_argument('--yday', action='store_true', help='Set date to yesterday')
 parser.add_argument('--today', action='store_true', help='Set date to today')
@@ -148,6 +149,22 @@ elif plotKind == "strainplus":
     dataStation = "MBLY"
 eventDate = args.date
 eventTime = args.time
+eventDatim = args.datim
+if eventDatim:
+    if ':' in eventDatim:
+        eventTime = eventDatim
+    elif '-' in eventDatim:
+        yyyy = eventDatim[0:4]
+        mm = eventDatim[4:6]
+        dd = eventDatim[6:8]
+        HH = eventDatim[9:11]
+        MM = eventDatim[11:13]
+        if len(eventDatim) > 13:
+            SS = eventDatim[13:15]
+        else:
+            SS = '00'
+        eventTime = ':'.join( [HH, MM, SS] )
+        eventDate = '-'.join( [yyyy, mm, dd] )
 eventTimeArg = ''.join( args.rest )
 if eventTimeArg:
     if ':' in eventTimeArg:
@@ -157,8 +174,12 @@ if eventTimeArg:
         mm = eventTimeArg[4:6]
         dd = eventTimeArg[6:8]
         HH = eventTimeArg[9:11]
-        MM = eventTimeArg[11:]
-        eventTime = ':'.join( [HH, MM, '00'] )
+        MM = eventTimeArg[11:13]
+        if len(eventTimeArg) > 13:
+            SS = eventTimeArg[13:15]
+        else:
+            SS = '00'
+        eventTime = ':'.join( [HH, MM, SS] )
         eventDate = '-'.join( [yyyy, mm, dd] )
 plotTscale= args.tscale
 plotYlim=args.ylim

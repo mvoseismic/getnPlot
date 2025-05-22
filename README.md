@@ -39,7 +39,7 @@ getnPlot
 ## Options
 
 ```
-   -h, --help        show this help message and exit
+  -h, --help        show this help message and exit
   -v, --version     show program's version number and exit
   --mode            Mode of operation: getnplot | get | plot | test (default: getnplot)
   -q, --quiet       No screen output (default: False)
@@ -51,6 +51,7 @@ getnPlot
   --sta             Station(s) to be plotted, comma separated) (not used in some kinds of plot). (default: MSS1)
   -d , --date       Date of event (UTC): today | yesterday | yyyy-mm-dd | yyyy.jjj (default: today)
   -t , --time       Time of event (UTC): hh:mm | hh:mm:ss | hh:mm:ss.s | now |now-X | now-Xs | now-Xm (default: now)
+  --datim           Date and time of event (UTC): yyyymmdd-hhmm | yyyymmdd-hhmmss (default: None)
   --yesterday       Set date to yesterday (default: False)
   --yday            Set date to yesterday (default: False)
   --today           Set date to today (default: False)
@@ -96,7 +97,6 @@ getnPlot
   --heliwidth       Width (minutes) of helicorder plot (default: 15.0)
   --heliscale       Scaling of helicorder plot (default: 0.0)
   --printdatarange  Print out range of data for each channel (default: False)
-
 ```
 
 ## --kind Options
@@ -176,6 +176,7 @@ Plot all default Z channels for a 60-second window with 10 seconds before time g
 getnPlot 21:23
 getnPlot 01:12:59.1
 getnPlot 20250123-1220
+getnPlot 20250123-122035
 ```
 Plot all default Z channels for a 120-second window with 40 seconds before time given.
 ```
