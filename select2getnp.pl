@@ -120,7 +120,7 @@ while (my $line = readline($fhi)) {
         } else {
             $cmd = join( ' ', $cmdStub, $cmdOpts, '--date', $evDate, '--time', $evTime, '--tag', $evTag, '--source', $evFile , '--pre 30 --dur 120 --kind close3C --shape long' );
         }
-        if( $strYr+0 >= 2022 ) {
+        if( substr($evDate,0,4)+0 >= 2022 ) {
            $cmd = join( ' ', $cmd, "--source mseed" );
        } else {
            $cmd = join( ' ', $cmd, "--source cont" );
