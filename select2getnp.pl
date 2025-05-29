@@ -32,7 +32,7 @@ my $bash = `which bash`;
 chomp $bash;
 print $fho "#!$bash\n";
 
-my $cmdStub = 'getnPlotSpecal5';
+my $cmdStub = 'getnPlotSpecial5';
 my $cmd = '';
 
 my $evType;
