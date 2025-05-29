@@ -113,12 +113,10 @@ while (my $line = readline($fhi)) {
         } elsif( $evType eq 'D' ){
             $evTag = 'Distant';
         }
-        # HACK TO USE MSEED FILES INSTEAD OF SEISAN FILE
-        $evFile = "mseed";
         if( $cmdOpts =~ /tag/ ) {
-            $cmd = join( ' ', $cmdStub, $cmdOpts, '--date', $evDate, '--time', $evTime, '--source', $evFile , '--pre 30 --dur 120 --kind close3C --shape long' );
+            $cmd = join( ' ', $cmdStub, $cmdOpts, '--date', $evDate, '--time', $evTime, '--pre 30 --dur 120 --kind close3C --shape long' );
         } else {
-            $cmd = join( ' ', $cmdStub, $cmdOpts, '--date', $evDate, '--time', $evTime, '--tag', $evTag, '--source', $evFile , '--pre 30 --dur 120 --kind close3C --shape long' );
+            $cmd = join( ' ', $cmdStub, $cmdOpts, '--date', $evDate, '--time', $evTime, '--tag', $evTag, '--pre 30 --dur 120 --kind close3C --shape long' );
         }
         if( substr($evDate,0,4)+0 >= 2022 ) {
            $cmd = join( ' ', $cmd, "--source mseed" );
@@ -130,8 +128,7 @@ while (my $line = readline($fhi)) {
             print $cmd, "\n";
             print $fho "$cmd\n";
         }
-        $cmd =~ s/close3C/Z/;
-        print join( '|', $evDate,$evTime,$evType,$evVolcType,$evFile), "\n";
+        $cmd =~ s/--kind close3C//;
         if( $evDate ){
             print $cmd, "\n";
             print $fho "$cmd\n";
