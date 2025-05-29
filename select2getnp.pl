@@ -130,6 +130,12 @@ while (my $line = readline($fhi)) {
             print $cmd, "\n";
             print $fho "$cmd\n";
         }
+        $cmd =~ s/close3C/Z/;
+        print join( '|', $evDate,$evTime,$evType,$evVolcType,$evFile), "\n";
+        if( $evDate ){
+            print $cmd, "\n";
+            print $fho "$cmd\n";
+        }
 
         $evType = '';
         $evVolcType = '';
