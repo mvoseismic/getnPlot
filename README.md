@@ -1,5 +1,7 @@
 # getnPlot
 
+## ~/src/getnPlot
+
 Plot seismic waveforms in a number of ways from a number of sources.
 
 ## Description

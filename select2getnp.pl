@@ -116,9 +116,9 @@ while (my $line = readline($fhi)) {
         # HACK TO USE MSEED FILES INSTEAD OF SEISAN FILE
         $evFile = "mseed";
         if( $cmdOpts =~ /tag/ ) {
-            $cmd = join( ' ', $cmdStub, $cmdOpts, '--date', $evDate, '--time', $evTime, '--source', $evFile );
+            $cmd = join( ' ', $cmdStub, $cmdOpts, '--date', $evDate, '--time', $evTime, '--source', $evFile , '--pre 30 --dur 120 --kind close3C --shape long' );
         } else {
-            $cmd = join( ' ', $cmdStub, $cmdOpts, '--date', $evDate, '--time', $evTime, '--tag', $evTag, '--source', $evFile );
+            $cmd = join( ' ', $cmdStub, $cmdOpts, '--date', $evDate, '--time', $evTime, '--tag', $evTag, '--source', $evFile , '--pre 30 --dur 120 --kind close3C --shape long' );
         }
         print join( '|', $evDate,$evTime,$evType,$evVolcType,$evFile), "\n";
         if( $evDate ){
