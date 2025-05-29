@@ -17,15 +17,24 @@ rm -f *.*
 
 getnPlot -q --pre 30 --dur 150 --shape xlong "$@"
 getnPlot -q --pre 30 --dur 150 --shape xlong --kind close3C "$@"
-
-conda deactivate >/dev/null 2>&1
-
 files=(*)
 fname=$files
 fname2=${fname//allz/special5}
+magick montage *.png -tile 1x2 -geometry +0+0 tmp1.png
 
-magick montage *.png -tile 1x2 -geometry +0+0 "${fname2}"
+getnPlot -q --pre 30 --dur 150 --kind tfr --sta MBLG --fmin 1.0 --fmax 50.0 "$@"
+getnPlot -q --pre 30 --dur 150 --kind tfr --sta MBLY --fmin 1.0 --fmax 50.0 "$@"
+getnPlot -q --pre 30 --dur 150 --kind tfr --sta MBRY --fmin 1.0 --fmax 50.0 "$@"
+getnPlot -q --pre 30 --dur 150 --kind tfr --sta MBBY --fmin 1.0 --fmax 50.0 "$@"
+
+conda deactivate >/dev/null 2>&1
+
+magick mogrify -crop 1181x829+560+85 *tfr*.png
+magick mogrify -resize 454x320! *tfr*.png
+magick montage *tfr*.png -tile 1x4 -geometry +1+1 tmp2.png
+magick montage tmp1.png tmp2.png -tile 2x1 -geometry +0+0 "${fname2}"
 
 mv ${fname2} ..
 cd ..
 rm -r tmpGetNPlot
+
