@@ -32,7 +32,7 @@ my $bash = `which bash`;
 chomp $bash;
 print $fho "#!$bash\n";
 
-my $cmdStub = 'getnPlot -q';
+my $cmdStub = 'getnPlotSpecal5';
 my $cmd = '';
 
 my $evType;
@@ -114,9 +114,9 @@ while (my $line = readline($fhi)) {
             $evTag = 'Distant';
         }
         if( $cmdOpts =~ /tag/ ) {
-            $cmd = join( ' ', $cmdStub, $cmdOpts, '--date', $evDate, '--time', $evTime, '--pre 30 --dur 120 --kind close3C --shape long' );
+            $cmd = join( ' ', $cmdStub, $cmdOpts, '--date', $evDate, '--time', $evTime );
         } else {
-            $cmd = join( ' ', $cmdStub, $cmdOpts, '--date', $evDate, '--time', $evTime, '--tag', $evTag, '--pre 30 --dur 120 --kind close3C --shape long' );
+            $cmd = join( ' ', $cmdStub, $cmdOpts, '--date', $evDate, '--time', $evTime, '--tag', $evTag );
         }
         if( substr($evDate,0,4)+0 >= 2022 ) {
            $cmd = join( ' ', $cmd, "--source mseed" );
@@ -124,11 +124,6 @@ while (my $line = readline($fhi)) {
            $cmd = join( ' ', $cmd, "--source cont" );
        } 
         print join( '|', $evDate,$evTime,$evType,$evVolcType,$evFile), "\n";
-        if( $evDate ){
-            print $cmd, "\n";
-            print $fho "$cmd\n";
-        }
-        $cmd =~ s/--kind close3C//;
         if( $evDate ){
             print $cmd, "\n";
             print $fho "$cmd\n";
