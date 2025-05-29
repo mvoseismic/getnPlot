@@ -127,6 +127,8 @@ while (my $line = readline($fhi)) {
         if( $evDate ){
             print $cmd, "\n";
             print $fho "$cmd\n";
+            $cmd =~ s/Special5/Special2/;
+            print $fho "$cmd\n";
         }
 
         $evType = '';
