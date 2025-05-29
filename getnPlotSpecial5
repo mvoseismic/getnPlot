@@ -3,10 +3,6 @@
 # Runs getnPlot.py under proper conda environment for interesting event
 # (assumes time is first pick time)
 
-all_args=("$@")
-first_arg="$1"
-rest_args=("${all_args[@]:1}")
-
 eval "$(conda shell.bash hook)"
 
 if [ "$HOSTNAME" = "opsproc2" ]; then
@@ -19,8 +15,8 @@ mkdir -p tmpGetNPlot
 cd tmpGetNPlot
 rm -f *.*
 
-getnPlot -q --pre 30 --dur 150 --shape xlong "${rest_args[@]}"
-getnPlot -q --pre 30 --dur 150 --shape xlong --kind close3C "${rest_args[@]}"
+getnPlot -q --pre 30 --dur 150 --shape xlong "$@"
+getnPlot -q --pre 30 --dur 150 --shape xlong --kind close3C "$@"
 
 conda deactivate >/dev/null 2>&1
 
