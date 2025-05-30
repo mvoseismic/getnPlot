@@ -1129,6 +1129,7 @@ elif plotKind == "special3c" and numberStations == 1:
 elif plotKind == "partmot" and numberStations == 1:
     thisFig = rodsPythonThings.plot3CPartMot( st2, windowPre, windowAnal  )
     plotFuncs = 'rods'
+    thisFig.set_size_inches(plotSize2[0]/100.0, plotSize2[1]/100.0)
 
 elif plotKind == "lahar":
     thisFig = rodsPythonThings.plotLahar( st2, windowPre, plotRms, plotFscale, plotZscale, plotFmin, plotFmax )
