@@ -26,7 +26,11 @@ if( $numArgs < 2 ){
     my $eventTime = $ARGV[1];
     my $lineLength;
     my $plotLength;
-    if( $numArgs == 4 ){
+    my $batchMode = 0;
+    if( $numArgs == 5 ){
+        $batchMode = 1;
+    }
+    if( $numArgs >= 4 ){
         $lineLength = $ARGV[2];
         $plotLength = $ARGV[3];
     } else {
@@ -59,22 +63,27 @@ if( $numArgs < 2 ){
     my $options = '--quiet --tag GNPFH --shape xxxxlong --pre 0m --kind Z --chaff noscnl --nogreen';
     $options = join( ' ', $options, '--dur', $lineLength ); 
     $options = join( '', $options, 'm' );
-    print "Fixed getnPlot options: $options\n";
-
     my $additionalOptions = '--sta MSS1 --hpfilt 2.0 --ylim 1200';
-    print "Current additional options: ", $additionalOptions, "\n";
-    print "Replace above options with (<CR> for not): ";
-    my $optsAdditional = <STDIN>;
-    chomp $optsAdditional;
-    if( $optsAdditional ne '' ){
-	    $additionalOptions = $optsAdditional;
+
+    my $keepPlots;
+    if( $batchMode == 0 ) {
+
+        print "Fixed getnPlot options: $options\n";
+        print "Current additional options: ", $additionalOptions, "\n";
+        print "Replace above options with (<CR> for not): ";
+        my $optsAdditional = <STDIN>;
+        chomp $optsAdditional;
+        if( $optsAdditional ne '' ){
+	        $additionalOptions = $optsAdditional;
+        }
+
+        print "Keep individual plot files?: ";
+        $keepPlots = <STDIN>;
+        chomp $keepPlots;
+
     }
 
     $options = join( ' ', $options, $additionalOptions );
-
-    print "Keep individual plot files?: ";
-    my $keepPlots = <STDIN>;
-    chomp $keepPlots;
 
     my $jumpOut = 0;
     do {
