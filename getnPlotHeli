@@ -18,6 +18,7 @@ my $numArgs = $#ARGV + 1;
 if( $numArgs < 2 ){ 
     print "Not enough arguments", "\n";
     print "usage: getnPlotHeli yyyy-mm-dd hh:mm minutesWide hoursPlot", "\n";
+    print "usage: add a fifth argument to trigger non-interactive batch mode\n";
 } else {
 
     print "WARNING: THIS TAKES A LONG TIME\n";
