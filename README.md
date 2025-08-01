@@ -142,7 +142,7 @@ stringthing
 | -------------| -------------------|
 | *getnPlot*   | Bash wrapper script to setup Python environment for *getnPlot.py*. |
 | *getnPlot*.py | Main program. |
-| *getnPlotHeli* | Runs *getnPlot* many times to create a helicorder-like plot.  Usage: *getnPlotHeli yyyy-mm-dd hh:mm minutesWide hoursPlot*|
+| *getnPlotHeli* | Runs *getnPlot* many times to create a helicorder-like plot.  Usage: *getnPlotHeli yyyy-mm-dd hh:mm minutesWide hoursPlot flag*|
 | *getnPlotIrish* | Runs *getnPlot* several times, suitable for events near Irish Ghaut.|
 | *getnPlotRemote* | Runs *getnPlot* on *opsproc2*. 
 | *getnPlotRock* | Runs getnPlot several times, suitable for rockfalls.|
