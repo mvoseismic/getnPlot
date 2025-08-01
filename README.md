@@ -157,7 +157,7 @@ stringthing
 | *getnPlotTfrAll* | Creates a montage of 12 TFR plots for all vertical components.|
 | *getnPlotVT* | Runs *getnPlot* several times, suitable for VTs. |
 | *getnPlotTiledTfr* | Runs *getnPlot* to get a tiled plot of TFR from the six closest stations. |
-| *getnPlotWav* | ***I can't remember if this works or is obselete.***|
+| *getnPlotWav* | ***I can't remember if this works or is obsolete.***|
 
 
 ### Other scripts
