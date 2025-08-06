@@ -61,7 +61,7 @@ if( $numArgs < 2 ){
     my $dtdPlot = DateTime::Duration->new( minutes => $plotLength );
     my $dtEnd = $dtStart + $dtdPlot;
     
-    my $options = '--quiet --tag GNPFH --shape xxxxlong --pre 0m --kind Z --chaff noscnl --nogreen';
+    my $options = '--quiet --tag GNPFH --shape xxxxlong --pre 0m --kind Z --chaff noscnl --nogreen --source mseed';
     $options = join( ' ', $options, '--dur', $lineLength ); 
     $options = join( '', $options, 'm' );
     my $additionalOptions = '--sta MSS1 --hpfilt 2.0 --ylim 1200';
