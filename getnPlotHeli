@@ -44,7 +44,7 @@ if( $numArgs < 2 ){
     my($hh,$mi) = split( ':', $eventTime );
 
     my $filePlot = join( '-', join( '', $yyyy, $mm, $dd ), join( '', $hh, $mi ), '-getnPlotHeli-' );
-    $filePlot = join( '', $filePlot, sprintf( "%d", $lineLength ), 'm-', sprintf( "%d", $plotLength ), 'd.png' );
+    $filePlot = join( '', $filePlot, sprintf( "%d", $lineLength ), 'm-', sprintf( "%d", $plotLength ), 'm.png' );
 
     # datetime for start time
     my $dtStart = DateTime->new(
