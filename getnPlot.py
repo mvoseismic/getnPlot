@@ -565,6 +565,8 @@ if filePlot == "":
     else:
         filePlot = filenameSeparator2.join([datimEventString,
             '-'+filenameTag, fileStaTag, windowString])
+    if dataEnv:
+        filePlot = filenameSeparator2.join([filePlot, 'env'])
     if dataHPfilt > 0.0:
         filePlot = filenameSeparator2.join([filePlot, 'hp'+ str(dataHPfilt)+'Hz'])
     if dataLPfilt > 0.0:
