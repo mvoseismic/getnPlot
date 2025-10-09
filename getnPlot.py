@@ -383,6 +383,7 @@ nslcWant = {
     'MV.MBGH.00.HH1', 'MV.MBGH.00.HH2', 'MV.MBGH.00.HHZ',
     'MV.MBGH..BHE', 'MV.MBGH..BHN', 'MV.MBGH..BHZ',
     'MV.MBGH..SHZ',
+    'MV.MBGB.10.HH1', 'MV.MBGB.10.HH2', 'MV.MBGB.10.HHZ',
     'MV.MBHA.10.HHE', 'MV.MBHA.10.HHN', 'MV.MBHA.10.HHZ',
     'MV.MBHA..BHE', 'MV.MBHA..BHN', 'MV.MBHA..BHZ',
     'MV.MBHA..SHZ',
@@ -399,6 +400,7 @@ nslcWant = {
 #    'MV.MBWH..SHZ',
     'MV.MRYT..SHZ',
     'MV.MSS1..SHZ',
+    'MV.MBCH.10.HHE', 'MV.MBCH.10.HHN', 'MV.MBCH.10.HHZ',
     'MV.MBJB.10.HHE', 'MV.MBJB.10.HHN', 'MV.MBJB.10.HHZ',
     'MV.MBMO.10.HHE', 'MV.MBMO.10.HHN', 'MV.MBMO.10.HHZ',
     'MV.MBSS.10.HHE', 'MV.MBSS.10.HHN', 'MV.MBSS.10.HHZ',
@@ -431,7 +433,7 @@ if plotKind[0:5] == "close":
 elif plotKind[0:6] == "radian":
     stas = ["MBFR", "MBLY", "MBLG", "MBBY", "MBGH", "MBFL", "MBGB"]
 elif plotKind[0:6] == "oxford":
-    stas = ["MBGB", "MBHA", "MBJB", "MBMO", "MBSS", "MBWR"]
+    stas = ["MBCH", "MBGB", "MBHA", "MBJB", "MBMO", "MBSS", "MBWR"]
 elif plotKind == "tfr":
     stas = dataStation.split(",")
     chas = "z"
@@ -489,8 +491,8 @@ elif plotKind == "infraplus":
     dataNormalize = "no"
 elif plotKind == "allplusz":
     stas = ["MSS1", "MBFR", "MBLY", "MBLG", "MBRY", "MBBY",
-            "MBHA", "MBGH", "MBWH", "MBFL", "MBGB", "TRNT", "OLV1", "MBRV", 
-            "MBJB", "MBMO", "MBSS", "MBWR"]
+            "MBHA", "MBGH", "MBWH", "MBFL", "MBGB", "MBRV", 
+            "MBCH", "MBJB", "MBMO", "MBSS", "MBWR"]
     chas = "z"
 elif plotKind == "stringthing":
     if dataStation == "MSS1":
