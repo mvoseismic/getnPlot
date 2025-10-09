@@ -65,7 +65,7 @@ parser.add_argument('--source', default='auto', help='Data source (auto tries ww
 parser.add_argument('--wwsip', default='172.17.102.60', help='Hostname or IP address of winston wave server', metavar='')
 parser.add_argument('--wwsport', default=16022, help='Port of winston wave server', metavar='')
 
-choices=['allZ','all3C','closeZ','close3C','radianZ','radian3C','Z','specialZ', 'spectrumZ', '3C','special3C','irishZ','irish3C','lahar','tfr','forAI', 'rockfall', 'partmot', 'all', 'allplusZ', 'strain', 'strainplus', 'infra', 'infraplus', 'heli', 'longsgram', 'stringthing' ]
+choices=['allZ','all3C','closeZ','close3C','radianZ','radian3C','Z','specialZ', 'spectrumZ', '3C','special3C','irishZ','irish3C','lahar','tfr','forAI', 'rockfall', 'partmot', 'all', 'allplusZ', 'strain', 'strainplus', 'infra', 'infraplus', 'heli', 'longsgram', 'stringthing', 'oxfordZ', 'oxford3C' ]
 parser.add_argument('-k', '--kind', default='allZ', choices=choices, help='Kind of plot (case-insensitive): '+' | '.join(choices), metavar='')
 parser.add_argument('--sta', default='MSS1', help='Station(s) to be plotted, comma separated) (not used in some kinds of plot).', metavar='')
 
@@ -399,6 +399,10 @@ nslcWant = {
 #    'MV.MBWH..SHZ',
     'MV.MRYT..SHZ',
     'MV.MSS1..SHZ',
+    'MV.MBJB.10.HHE', 'MV.MBJB.10.HHN', 'MV.MBJB.10.HHZ',
+    'MV.MBMO.10.HHE', 'MV.MBMO.10.HHN', 'MV.MBMO.10.HHZ',
+    'MV.MBSS.10.HHE', 'MV.MBSS.10.HHN', 'MV.MBSS.10.HHZ',
+    'MV.MBWR.10.HHE', 'MV.MBWR.10.HHN', 'MV.MBWR.10.HHZ',
     'MC.AIRS..BLZ', 'MC.OlV1..BLZ', 'MC.TRNT..BLZ',
     'CU.GRGR.00.BHZ', 'CU.GRGR.00.BH1', 'CU.GRGR.00.BH2',
     'CU.ANWB.00.BHZ', 'CU.ANWB.00.BH1', 'CU.ANWB.00.BH2',
@@ -426,6 +430,8 @@ if plotKind[0:5] == "close":
     stas = ["MSS1", "MBFR", "MBLY", "MBLG", "MBRY"]
 elif plotKind[0:6] == "radian":
     stas = ["MBFR", "MBLY", "MBLG", "MBBY", "MBGH", "MBFL", "MBGB"]
+elif plotKind[0:6] == "oxford":
+    stas = ["MBGB", "MBHA", "MBJB", "MBMO", "MBSS", "MBWR"]
 elif plotKind == "tfr":
     stas = dataStation.split(",")
     chas = "z"
@@ -483,7 +489,8 @@ elif plotKind == "infraplus":
     dataNormalize = "no"
 elif plotKind == "allplusz":
     stas = ["MSS1", "MBFR", "MBLY", "MBLG", "MBRY", "MBBY",
-            "MBHA", "MBGH", "MBWH", "MBFL", "MBGB", "TRNT", "OLV1", "MBRV"]
+            "MBHA", "MBGH", "MBWH", "MBFL", "MBGB", "TRNT", "OLV1", "MBRV", 
+            "MBJB", "MBMO", "MBSS", "MBWR"]
     chas = "z"
 elif plotKind == "stringthing":
     if dataStation == "MSS1":
