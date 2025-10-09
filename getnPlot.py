@@ -490,9 +490,8 @@ elif plotKind == "infraplus":
     chas = "hz"
     dataNormalize = "no"
 elif plotKind == "allplusz":
-    stas = ["MSS1", "MBFR", "MBLY", "MBLG", "MBRY", "MBBY",
-            "MBHA", "MBGH", "MBWH", "MBFL", "MBGB", "MBRV", 
-            "MBCH", "MBJB", "MBMO", "MBSS", "MBWR"]
+    stas = ["MSS1", "MBFR", "MBLY", "MBLG", "MBRY", "MBSS", "MBWR", "MBBY",
+            "MBHA", "MBGH", "MBWH", "MBFL", "MBGB", "MBCH", "MBMO", "MBRV"] 
     chas = "z"
 elif plotKind == "stringthing":
     if dataStation == "MSS1":
