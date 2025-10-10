@@ -719,40 +719,25 @@ if not runQuiet:
 st = Stream()
 
 if dataSource == 'auto':
-    # First try Waveserver
-    dataSource = 'waveserver ' + str(wwsIP)
+    # If event is more than 3 days old, use mseed
+    datimCutoff = datimNow - timedelta(seconds=259200)
+    if evDatim < datimCutoff:
+        dataSource = 'mseed'
+    else:
+        dataSource = 'wws'
+
+if dataSource == 'wws':
+    # Waveserver
+    # Define wave server
     client = Client(wwsIP, wwsPort, clientTimeout)
-    info = client.get_availability(network='*', station='*', channel='*')
-    #info = client.get_availability(network='MV', station='*', channel='*')
+    # Fetch all data from waveserver
+    info = client.get_availability(network='MV', station='M*', channel='*')
     sys.stdout = open(os.devnull, "w")
     sys.stderr = open(os.devnull, "w")
     for net, sta, loc, cha, start, end in info:
         st += client.get_waveforms(net, sta, loc, cha, datimBeg, datimEnd)
     sys.stdout = sys.__stdout__
     sys.stderr = sys.__stderr__
-
-    if len(st) == 0:
-        # Second try miniseed files
-        dataSource = 'continuous miniseed data'
-        warnings.filterwarnings("ignore")
-        for netw in ["MV", "MC", "CU", "TR"]:
-            client = sdsClient(dirnameSeparator.join([pathMseed, netw]))
-            client.FMTSTR = '{station}/{year}.{doy:03d}.{network}.{station}.{location}.{channel}.mseed'
-            st += client.get_waveforms(netw, '*',
-                                           '*', '*', datimBeg, datimEnd)
-        warnings.filterwarnings("default")
-
-    if not runQuiet:
-        print(' Streams from ' + dataSource + ': ' + str(len(st)))
-
-elif dataSource == 'wws':
-    # Waveserver
-    # Define wave server
-    client = Client(wwsIP, wwsPort, clientTimeout)
-    # Fetch all data from waveserver
-    info = client.get_availability(network='MV', station='M*', channel='*')
-    for net, sta, loc, cha, start, end in info:
-        st += client.get_waveforms(net, sta, loc, cha, datimBeg, datimEnd)
 
 elif dataSource == "mseed":
     client = sdsClient(pathMseed)
