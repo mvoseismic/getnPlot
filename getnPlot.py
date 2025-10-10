@@ -458,6 +458,7 @@ elif plotKind == "spectrumz":
 elif plotKind == "lahar":
     stas = [ "MSS1", "MBFR", "MBLY", "MBBY" ]
     chas = "z"
+    dataHPfilt = 1.0;
 elif plotKind == "rockfall":
     stas = [ "MSS1", "MBRY", "MBLY", "MBLG", "MBGH", "MBBY", "MBFR" ]
     chas = "z"
