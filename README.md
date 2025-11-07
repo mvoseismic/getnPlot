@@ -126,7 +126,8 @@ allplusZ		All core Z channels plus TRNT and OLV1.
 strain			Strain data from OLV1, TRNT.
 strainplus		Strain data from AIRS, OLV1, TRNT.
 infra			All HDF channels
-infraplus		MBFL HDF with seismic channels specified by --sta.
+infraplusz		MBFL HDF with vertical seismic channels.
+infraplus3c		MBFL HDF with 3C seismic channels.
 heli				
 longsgram
 stringthing
