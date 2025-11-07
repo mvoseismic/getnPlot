@@ -65,7 +65,7 @@ parser.add_argument('--source', default='auto', help='Data source (auto tries ww
 parser.add_argument('--wwsip', default='172.17.102.60', help='Hostname or IP address of winston wave server', metavar='')
 parser.add_argument('--wwsport', default=16022, help='Port of winston wave server', metavar='')
 
-choices=['allZ','all3C','closeZ','close3C','radianZ','radian3C','Z','specialZ', 'spectrumZ', '3C','special3C','irishZ','irish3C','lahar','tfr','forAI', 'rockfall', 'partmot', 'all', 'allplusZ', 'strain', 'strainplus', 'infra', 'infraplus', 'heli', 'longsgram', 'stringthing', 'oxfordZ', 'oxford3C' ]
+choices=['allZ','all3C','closeZ','close3C','radianZ','radian3C','Z','specialZ', 'spectrumZ', '3C','special3C','irishZ','irish3C','lahar','tfr','forAI', 'rockfall', 'partmot', 'all', 'allplusZ', 'strain', 'strainplus', 'infra', 'infraplusz', 'infraplus3c', 'heli', 'longsgram', 'stringthing', 'oxfordZ', 'oxford3C' ]
 parser.add_argument('-k', '--kind', default='allZ', choices=choices, help='Kind of plot (case-insensitive): '+' | '.join(choices), metavar='')
 parser.add_argument('--sta', default='MSS1', help='Station(s) to be plotted, comma separated) (not used in some kinds of plot).', metavar='')
 
@@ -487,10 +487,14 @@ elif plotKind == "strainplus":
 elif plotKind == "infra":
     stas =["MBFL"] 
     chas = "h"
-elif plotKind == "infraplus":
-    stas = dataStation.split(",")
+elif plotKind == "infraplusz":
+    stas =["MBFL"] 
     chas = "hz"
     dataNormalize = "no"
+elif plotKind == "infraplus3c":
+    stas =["MBFL"] 
+    chas = "h3c"
+    dataNormalize = "3c"
 elif plotKind == "allplusz":
     stas = ["MSS1", "MBFR", "MBLY", "MBLG", "MBRY", "MBSS", "MBWR", "MBBY", "MBAM",
             "MBHA", "MBGH", "MBWH", "MBFL", "MBGB", "MBCH", "OLV1", "MBMO", "MBRV"] 
@@ -944,6 +948,71 @@ elif chas == "3c":
                         netf = f'{icha:02d}'
                         tr.stats.network = netf
                         st2 += tr
+elif chas == "h3c":
+    # Loop round wanted stations
+    for sta in stas:
+        stt = stWant.select(station=sta, channel='HH*')
+        if len(stt) == 3:
+            for i in range(3):
+                tr = stt[i]
+                if tr.stats.channel.endswith('Z'):
+                    ichat = icha + 1
+                elif tr.stats.channel.endswith('1'):
+                    ichat = icha + 2
+                elif tr.stats.channel.endswith('2'):
+                    ichat = icha + 3
+                elif tr.stats.channel.endswith('E'):
+                    ichat = icha + 2
+                elif tr.stats.channel.endswith('N'):
+                    ichat = icha + 3
+                netf = f'{ichat:02d}'
+                tr.stats.network = netf
+                st2 += tr
+            icha += 3
+        else:
+            stt = stWant.select(station=sta, channel='BH*')
+            if len(stt) == 3:
+                for i in range(3):
+                    tr = stt[i]
+                    if tr.stats.channel.endswith('Z'):
+                        ichat = icha + 1
+                    elif tr.stats.channel.endswith('E'):
+                        ichat = icha + 2
+                    elif tr.stats.channel.endswith('N'):
+                        ichat = icha + 3
+                    netf = f'{ichat:02d}'
+                    tr.stats.network = netf
+                    st2 += tr
+                icha += 3
+            else:
+                stt = stWant.select(station=sta, channel='SHZ')
+                if len(stt) == 1:
+                    tr = stt[0]
+                    icha += 1
+                    netf = f'{icha:02d}'
+                    tr.stats.network = netf
+                    st2 += tr
+                else:
+                    stt = stWant.select(station=sta, channel='BLZ')
+                    if len(stt) == 1:
+                        tr = stt[0]
+                        icha += 1
+                        netf = f'{icha:02d}'
+                        tr.stats.network = netf
+                        st2 += tr
+        if sta == 'MBFL':
+            try:
+                stt = stWant.select(station=sta, channel='HDF')
+                tr = stt[0]
+            except:
+                tr = Trace(data=np.zeros(2))
+                tr.stats.npts = 2
+                tr.stats.starttime = datimBeg
+                tr.stats.station = sta
+                tr.stats.sampling_rate = 100.0
+            netf = f'{icha:02d}'
+            tr.stats.network = netf
+            st2 += tr
 elif chas == "all":
     # Loop round wanted stations
     for sta in stas:
@@ -1073,6 +1142,17 @@ if plotKind == "heli":
 
 if dataNormalize == 'yes':
     equalScale = True
+elif dataNormalize == '3c' and chas == 'h3c':
+    sttemp = Stream()
+    for sta in stas:
+        sttemp2 = st2.select( station=sta, channel="HDF" )
+        sttemp3 = st2.select( station=sta, channel="?H?" )
+        if len(sttemp3) > 0:
+            sttemp3.normalize( global_max=True )
+            sttemp += sttemp3
+            sttemp += sttemp2
+    st2 = sttemp
+    equalScale = False 
 elif dataNormalize == '3c':
     sttemp = Stream()
     for sta in stas:
