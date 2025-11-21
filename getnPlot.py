@@ -103,6 +103,7 @@ parser.add_argument('--fmin', type=float, default=0, help='Minimum frequency for
 parser.add_argument('--fmax', type=float, default=100.0, help='Maximum frequency for analysis and plotting', metavar='')
 parser.add_argument('--hpfilt', type=float, default=0.0, help='High-pass filter corner frequency', metavar='')
 parser.add_argument('--lpfilt', type=float, default=0.0, help='Low-pass filter corner frequency', metavar='')
+parser.add_argument('--notchfilt', action='store_true', help='Notch filter 8-15Hz.')
 choices=['no','yes','3c']
 parser.add_argument('--norm', default='3c', choices=choices, help='Normalise data: '+' | '.join(choices), metavar='')
 parser.add_argument('--mult', default=1.0, help='Multiply data by this much', metavar='')
@@ -226,6 +227,7 @@ plotFmax = args.fmax
 plotFmin = args.fmin
 dataHPfilt = args.hpfilt
 dataLPfilt = args.lpfilt
+dataNotchfilt = args.notchfilt
 dataIntegrate = args.integrate
 dataNormalize = args.norm
 #dataMult= args.mult
@@ -585,6 +587,8 @@ if filePlot == "":
         filePlot = filenameSeparator2.join([filePlot, 'hp'+ str(dataHPfilt)+'Hz'])
     if dataLPfilt > 0.0:
         filePlot = filenameSeparator2.join([filePlot, 'lp'+ str(dataLPfilt)+'Hz'])
+    if dataNotchfilt:
+        filePlot = filenameSeparator2.join([filePlot, 'notch'])
     if dataIntegrate:
         filePlot = filenameSeparator2.join([filePlot, 'integrated'])
     plotTitle = filePlot
@@ -684,6 +688,7 @@ if not runQuiet:
     print(' Min frequency:      ' + str(dataFmin))
     print(' HP filter:          ' + str(dataHPfilt))
     print(' LP filter:          ' + str(dataLPfilt))
+    print(' Notch filer:        ' + str(dataNotchfilt))
     print(' Normalize:          ' + dataNormalize)
     print(' Integrate:          ' + str(dataIntegrate))
     print(' Plot abs(data):     ' + str(dataAbs))
@@ -1073,6 +1078,8 @@ if dataLPfilt > 0.0:
 st2.detrend('demean')
 if dataHPfilt > 0.0:
     st2.filter("highpass", freq=dataHPfilt)
+if dataNotchfilt:
+    st2.filter("bandstop", freqmin=8.0, freqmax=15.0 )
 if dataIntegrate:
     st2.filter( "bandpass", freqmax=0.1, freqmin=0.003 )
     st2.integrate
