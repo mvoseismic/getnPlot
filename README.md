@@ -77,7 +77,7 @@ getnPlot
   --fmax            Maximum frequency for analysis and plotting (default: 100.0)
   --hpfilt          High-pass filter corner frequency (default: 0.0)
   --lpfilt          Low-pass filter corner frequency (default: 0.0)
-  --notchfilt       Notch filter 8-15Hz. (default: False)
+  --notchfilt       Notch filter 4-15Hz. (default: False)
   --norm            Normalise data: no | yes | 3c (default: 3c)
   --mult            Multiply data by this much (default: 1.0)
   --integrate       Integrate seismic data (default: False)
