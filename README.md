@@ -48,7 +48,8 @@ getnPlot
   --source          Data source (auto tries wws then mseed then cont): auto | wws | mseed | cont | event | filename (default: auto)
   --wwsip           Hostname or IP address of winston wave server (default: 172.17.102.60)
   --wwsport         Port of winston wave server (default: 16022)
-  -k , --kind       Kind of plot (case-insensitive): allZ | all3C | closeZ | close3C | radianZ | radian3C | Z | specialZ | spectrumZ | 3C | special3C | irishZ | irish3C | lahar | tfr | forAI | rockfall | partmot | all | allplusZ | strain | strainplus | infra | infraplus | heli | longsgram | stringthing | oxfordZ | oxford3C (default: allZ)
+  -k , --kind       Kind of plot (case-insensitive): allZ | all3C | closeZ | close3C | radianZ | radian3C | Z | specialZ | spectrumZ | 3C | special3C | irishZ | irish3C | lahar | tfr | forAI | rockfall | partmot | all | allplusZ | strain | strainplus | infra | infraplusz | infraplus3c | heli | longsgram |
+                    stringthing | oxfordZ | oxford3C (default: allZ)
   --sta             Station(s) to be plotted, comma separated) (not used in some kinds of plot). (default: MSS1)
   -d , --date       Date of event (UTC): today | yesterday | yyyy-mm-dd | yyyy.jjj (default: today)
   -t , --time       Time of event (UTC): hh:mm | hh:mm:ss | hh:mm:ss.s | now |now-X | now-Xs | now-Xm (default: now)
@@ -62,7 +63,7 @@ getnPlot
   --shape           Shape of plot: landscape | portrait | square | long | xlong | xxlong | xxxlong | xxxxlong | thin (default: landscape)
   --size            Length (pixels) of longest side of plot (default: 1920)
   --tscale          Time scale units (defaults to s or what window duration is specified in): d | s | m | h (default: d)
-  --ylim            Limits of Y axis for plot (+/- this number) (default: 0)
+  --ylim            Limits of Y axis for plot (+/- this value. If ylim is less than 1, it uses ylim times tha maximum of the data.) (default: 0)
   --fscale          Frequency scale for analysis and plotting: linear | log (default: linear)
   --zscale          Z scale for plotting: amp | power | log | sqrt (default: sqrt)
   --plotspec        No spectrum in TFR plot (default: False)
@@ -77,7 +78,7 @@ getnPlot
   --fmax            Maximum frequency for analysis and plotting (default: 100.0)
   --hpfilt          High-pass filter corner frequency (default: 0.0)
   --lpfilt          Low-pass filter corner frequency (default: 0.0)
-  --bsfilt          Notch filter 4-15Hz. (default: False)
+  --bsfilt          Bandstop filter 4-15Hz. (default: False)
   --norm            Normalise data: no | yes | 3c (default: 3c)
   --mult            Multiply data by this much (default: 1.0)
   --integrate       Integrate seismic data (default: False)
@@ -95,10 +96,11 @@ getnPlot
   --downsample      Downsampling factor (default: 1)
   --saverms         Save RMS of signals in a text file (default: False)
   --savemax         Save max of signals in a text file (default: False)
-  --chaff           Labels, titles, etc: none | some | noscnl | title | scnltitle | all (default: all)
+  --chaff           Labels, titles, etc: none | some | noscnl | title | scnltitle | scnl | all (default: all)
   --heliwidth       Width (minutes) of helicorder plot (default: 15.0)
   --heliscale       Scaling of helicorder plot (default: 0.0)
   --printdatarange  Print out range of data for each channel (default: False)
+
 ```
 
 ## --kind Options

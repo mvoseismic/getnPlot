@@ -85,7 +85,7 @@ parser.add_argument('--shape', default='landscape', choices=choices , help='Shap
 parser.add_argument('--size', type=int, default=1920, help='Length (pixels) of longest side of plot', metavar='')
 choices=['d','s','m','h']
 parser.add_argument('--tscale', default='d', choices=choices , help='Time scale units (defaults to s or what window duration is specified in): ' +' | '.join(choices), metavar='')
-parser.add_argument('--ylim', type=float, default=0, help='Limits of Y axis for plot (+/- this number)', metavar='')
+parser.add_argument('--ylim', type=float, default=0, help='Limits of Y axis for plot (+/- this value. If ylim is less than 1, it uses ylim times tha maximum of the data.)', metavar='')
 choices=['linear','log']
 parser.add_argument('--fscale', default='linear', choices=choices, help='Frequency scale for analysis and plotting: '+' | '.join(choices), metavar='')
 choices=['amp','power','log','sqrt']
@@ -124,7 +124,7 @@ parser.add_argument('--datimtag', default=4, help='Number of characters in time 
 parser.add_argument('--downsample', type=int, default=1, help='Downsampling factor', metavar='')
 parser.add_argument('--saverms', action='store_true', help='Save RMS of signals in a text file')
 parser.add_argument('--savemax', action='store_true', help='Save max of signals in a text file')
-choices=['none','some','noscnl', 'title', 'scnltitle', 'all']
+choices=['none','some','noscnl', 'title', 'scnltitle', 'scnl', 'all']
 parser.add_argument('--chaff', default='all', choices=choices, help='Labels, titles, etc: '+' | '.join(choices), metavar='')
 parser.add_argument('--heliwidth', type=float, default=15.0, help='Width (minutes) of helicorder plot', metavar='')
 parser.add_argument('--heliscale', type=float, default=0.0, help='Scaling of helicorder plot', metavar='')
@@ -1326,13 +1326,23 @@ for thisAxes in theseAxes:
     elif plotChaff == 'scnltitle':
         thisAxes.set_yticklabels([])
         thisAxes.set_xticklabels([])
+    elif plotChaff == 'scnl':
+        thisAxes.set_yticklabels([])
+        thisAxes.set_xticklabels([])
+        thisAxes.set_title('')
 
 
 
 ############  Fix Y scale
-if plotFuncs == 'obspy' and plotYlim> 0:
+if plotFuncs == 'obspy' and plotYlim  != 0:
     theseAxes = thisFig.get_axes()
-    theseAxes[0].set_ylim([-1*plotYlim, plotYlim])
+    if plotYlim > 1:
+        theseAxes[0].set_ylim([-1*plotYlim, plotYlim])
+    elif plotYlim < 1:
+        tr = st2[0]
+        datamax = max( abs( tr.data ) )
+        plotYlim = datamax * plotYlim
+        theseAxes[0].set_ylim([-1*plotYlim, plotYlim])
 
 
 
