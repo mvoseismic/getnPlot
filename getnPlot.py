@@ -481,7 +481,7 @@ elif plotKind == "all":
     chas = "3c"
 elif plotKind == "strain":
     stas = ["OLV1", "TRNT"]
-    chas = "z"
+    chas = "s"
 elif plotKind == "strainplus":
     stas = ["AIRS", "OLV1", "TRNT"]
     stas.append( dataStation )
@@ -854,13 +854,13 @@ if chas == "z":
         netf = f'{icha:02d}'
         tr.stats.network = netf
         st2 += tr
-elif chas == "h":
+elif chas == "s":
     # Loop round wanted stations
     for sta in stas:
         icha += 1
         # Get wanted channels
         try:
-            stt = stWant.select(station=sta, channel='HDF')
+            stt = stWant.select(station=sta, channel='BLZ')
             tr = stt[0]
         except:
             tr = Trace(data=np.zeros(2))
